@@ -27,31 +27,32 @@ namespace csvd
             /// Parse args - file1 file2 key
             /* string[] files = { args[0], args[1] }; */
             /* int pKey = Int32.Parse(args[2]); */
+            ParseArgs parsedArgs = new ParseArgs(args);
+            Console.WriteLine($"Old File: {parsedArgs.OldFile}\nNew File: {parsedArgs.NewFile}");
+            /* Dictionary<string, string> myDict1 = new Dictionary<string, string>(); */
+            /* Dictionary<string, string> myDict2 = new Dictionary<string, string>(); */
 
-            Dictionary<string, string> myDict1 = new Dictionary<string, string>();
-            Dictionary<string, string> myDict2 = new Dictionary<string, string>();
+            /* myDict1.Add("key1","value1"); */
+            /* myDict1.Add("key2","value2"); */
+            /* myDict2.Add("key1","value3"); */
+            /* myDict2.Add("key3","value8"); */
+            /* myDict1.Add("key4","value9"); */
+            /* myDict2.Add("key5","value8"); */
 
-            myDict1.Add("key1","value1");
-            myDict1.Add("key2","value2");
-            myDict2.Add("key1","value3");
-            myDict2.Add("key3","value8");
-            myDict1.Add("key4","value9");
-            myDict2.Add("key5","value8");
+            /* var keysDictionary1HasThat2DoesNot = myDict1.Keys.Except(myDict2.Keys); */
+            /* var keysDictionary2HasThat1DoesNot = myDict2.Keys.Except(myDict1.Keys); */
 
-            var keysDictionary1HasThat2DoesNot = myDict1.Keys.Except(myDict2.Keys);
-            var keysDictionary2HasThat1DoesNot = myDict2.Keys.Except(myDict1.Keys);
+            /* Console.WriteLine("Exclusive to Dictionary1: "); */
+            /* foreach (var key in keysDictionary1HasThat2DoesNot) */
+            /* { */
+            /*     Console.WriteLine(key.ToString()); */
+            /* } */
 
-            Console.WriteLine("Exclusive to Dictionary1: ");
-            foreach (var key in keysDictionary1HasThat2DoesNot)
-            {
-                Console.WriteLine(key.ToString());
-            }
-
-            Console.WriteLine("Exclusive to Dictionary2: ");
-            foreach (var key in keysDictionary2HasThat1DoesNot)
-            {
-                Console.WriteLine(key.ToString());
-            }
+            /* Console.WriteLine("Exclusive to Dictionary2: "); */
+            /* foreach (var key in keysDictionary2HasThat1DoesNot) */
+            /* { */
+            /*     Console.WriteLine(key.ToString()); */
+            /* } */
 
 
             /* Console.WriteLine($"File1: {files[0]}, File2: {files[1]}, PrimaryKey: {pKey}"); */
