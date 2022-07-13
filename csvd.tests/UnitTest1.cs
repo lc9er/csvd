@@ -45,7 +45,7 @@ public class UnitTest1
     {
         string[] testArgs = {"File1", "File2", "-p"};
         ArgumentException ex = Assert.Throws<ArgumentException>(() => new ParseArgs(testArgs));
-        Assert.Equal("Missing primary key", ex.Message);
+        Assert.Equal("Missing -p values", ex.Message);
     }
 
     [Fact]
@@ -56,12 +56,31 @@ public class UnitTest1
         var ParsedArgs = new ParseArgs(testArgs);
         Assert.Equal(pKeys, ParsedArgs.PrimaryKey);
     }
+
     [Fact]
     public void ParseArgs_ReturnPKey_StringNotInt()
     {
         string[] testArgs = {"File1", "File2", "-p", "BADKEY"};
         ArgumentException ex = Assert.Throws<ArgumentException>(() => new ParseArgs(testArgs));
-        Assert.Equal("Primary key must be an integer", ex.Message);
+        Assert.Equal("-p values must be an integer", ex.Message);
+    }
+
+    [Fact]
+    public void ParseArgs_Return_ExcludeFields()
+    {
+        string[] testArgs = {"File1", "File2", "-e", "3,4"};
+        int[] excludes = {3,4};
+        var ParsedArgs = new ParseArgs(testArgs);
+        Assert.Equal(excludes, ParsedArgs.ExcludeFields);
+    }
+
+    [Fact]
+    public void ParseArgs_Return_EmptyExcludeFields()
+    {
+        string[] testArgs = {"File1", "File2"};
+        int[] excludes = {};
+        var ParsedArgs = new ParseArgs(testArgs);
+        Assert.Equal(excludes, ParsedArgs.ExcludeFields);
     }
 }
 

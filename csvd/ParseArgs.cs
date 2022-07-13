@@ -5,34 +5,40 @@ namespace csvd
         public string OldFile;
         public string NewFile;
         public int[] PrimaryKey;
+        public int[] ExcludeFields;
 
-        public int[] GetPKey(string[] cliArgs)
+        public int[] GetKeyVals(string[] cliArgs, string key)
         {
-            if (!cliArgs.Contains("-p"))
+            // if primary key index not specified, return {0}
+            if (key == "-p" && !cliArgs.Contains(key))
             {
                 return new int[] { 0 };
+            }
+            else if (key == "-e" && !cliArgs.Contains(key))
+            {
+                return new int[] {};
             }
             else
             {
                 // index of -p param
-                int pIndex = Array.IndexOf(cliArgs, "-p");
+                int keyIndex = Array.IndexOf(cliArgs, key);
 
                 // -p provided
-                if (pIndex + 1 < cliArgs.Length)
+                if (keyIndex + 1 < cliArgs.Length)
                 {
-                    string[] pKey = cliArgs[pIndex + 1].Split(',');
-                    int[] pKeyArray = new int[pKey.Length];
+                    string[] keyVals = cliArgs[keyIndex + 1].Split(',');
+                    int[] pKeyArray = new int[keyVals.Length];
 
-                    for (var i = 0; i < pKey.Length; i++)
+                    for (var i = 0; i < keyVals.Length; i++)
                     {
                         // Only take ints as key(s)
-                        if (Int32.TryParse(pKey[i], out int pKeyInt))
+                        if (Int32.TryParse(keyVals[i], out int pKeyInt))
                         {
                             pKeyArray[i] = pKeyInt;
                         }
                         else
                         {
-                            throw new ArgumentException(String.Format("Primary key must be an integer"));
+                            throw new ArgumentException(String.Format($"{key} values must be an integer"));
                         }
                     }
 
@@ -41,7 +47,7 @@ namespace csvd
                 // -p flag, but no key listed
                 else 
                 {
-                    throw new ArgumentException(String.Format("Missing primary key"));
+                    throw new ArgumentException(String.Format($"Missing {key} values"));
                 }
             }
         }
@@ -58,7 +64,8 @@ namespace csvd
                 NewFile = cliArgs[1];
             }
 
-            PrimaryKey = GetPKey(cliArgs);
+            PrimaryKey = GetKeyVals(cliArgs, "-p");
+            ExcludeFields = GetKeyVals(cliArgs,"-e");
         }
     }
 }
