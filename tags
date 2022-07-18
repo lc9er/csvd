@@ -4,18 +4,22 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-GetPKey	csvd/ParseArgs.cs	/^        public int GetPKey(string[] cliArgs)$/;"	m	class:csvd.ParseArgs
+IOptions	csvd/ParseArgs.cs	/^    interface IOptions$/;"	i	namespace:csvd
 Main	csvd/Program.cs	/^        static void Main(string[] args)$/;"	m	class:csvd.csvd	file:
-NewFile	csvd/ParseArgs.cs	/^        public string NewFile;$/;"	f	class:csvd.ParseArgs
-OldFile	csvd/ParseArgs.cs	/^        public string OldFile;$/;"	f	class:csvd.ParseArgs
-ParseArgs	csvd/ParseArgs.cs	/^        public ParseArgs(string[] cliArgs)$/;"	m	class:csvd.ParseArgs
-ParseArgs	csvd/ParseArgs.cs	/^    public class ParseArgs$/;"	c	namespace:csvd
+NewFile	csvd/ParseArgs.cs	/^        string NewFile { get; set; }$/;"	p	interface:csvd.IOptions
+OldFile	csvd/ParseArgs.cs	/^        string OldFile { get; set; }$/;"	p	interface:csvd.IOptions
 ParseArgs_ReturnPKeyEmpty	csvd.tests/UnitTest1.cs	/^    public void ParseArgs_ReturnPKeyEmpty()$/;"	m	class:UnitTest1
 ParseArgs_ReturnPKeyValue	csvd.tests/UnitTest1.cs	/^    public void ParseArgs_ReturnPKeyValue()$/;"	m	class:UnitTest1
+ParseArgs_ReturnPKey_MissingPKey	csvd.tests/UnitTest1.cs	/^    public void ParseArgs_ReturnPKey_MissingPKey()$/;"	m	class:UnitTest1
+ParseArgs_ReturnPKey_Multiple	csvd.tests/UnitTest1.cs	/^    public void ParseArgs_ReturnPKey_Multiple()$/;"	m	class:UnitTest1
+ParseArgs_ReturnPKey_StringNotInt	csvd.tests/UnitTest1.cs	/^    public void ParseArgs_ReturnPKey_StringNotInt()$/;"	m	class:UnitTest1
+ParseArgs_Return_EmptyExcludeFields	csvd.tests/UnitTest1.cs	/^    public void ParseArgs_Return_EmptyExcludeFields()$/;"	m	class:UnitTest1
+ParseArgs_Return_ExcludeFields	csvd.tests/UnitTest1.cs	/^    public void ParseArgs_Return_ExcludeFields()$/;"	m	class:UnitTest1
 ParseArgs_ReturnsException	csvd.tests/UnitTest1.cs	/^    public void ParseArgs_ReturnsException()$/;"	m	class:UnitTest1
 ParseArgs_ReturnsFileNames	csvd.tests/UnitTest1.cs	/^    public void ParseArgs_ReturnsFileNames(params string[] value)$/;"	m	class:UnitTest1
-PrimaryKey	csvd/ParseArgs.cs	/^        public int PrimaryKey;$/;"	f	class:csvd.ParseArgs
 UnitTest1	csvd.tests/UnitTest1.cs	/^public class UnitTest1$/;"	c
-csvd	csvd/ParseArgs.cs	/^namespace csvd $/;"	n
+csvd	csvd/ParseArgs.cs	/^namespace csvd$/;"	n
 csvd	csvd/Program.cs	/^    public class csvd$/;"	c	namespace:csvd
 csvd	csvd/Program.cs	/^namespace csvd $/;"	n
+excludeCols	csvd/ParseArgs.cs	/^        int?[] excludeCols { get; set; }$/;"	p	interface:csvd.IOptions
+pKey	csvd/ParseArgs.cs	/^        int[] pKey { get; set; }$/;"	p	interface:csvd.IOptions
