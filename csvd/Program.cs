@@ -1,31 +1,60 @@
-﻿using System;
-using CommandLine;
-using CommandLine.Text;
-using System.Collections.Generic;
-using CsvHelper;
+﻿using CommandLine;
 
 namespace csvd 
 {
     public class csvd
     {
+        static void Run(string OldFileName, string NewFileName, IEnumerable<int> PrimaryKey)
+        {
+            // Get CsvDict for old file
+            Dictionary<string, List<string>> oldFileDict = ParseCsv.GetCsvDict(OldFileName, PrimaryKey);
+            Console.WriteLine();
+            Console.WriteLine($"OldFile: {OldFileName}");
+            foreach (var key in oldFileDict.Keys)
+            {
+                Console.WriteLine($"Key: {key}");
+                List<string> values = oldFileDict[key];
+                foreach (var value in values)
+                {
+                    Console.WriteLine($"Key: {key}, Value: {value}");
+                }
+            }
+
+            // Get CsvDict for new file
+            Dictionary<string, List<string>> newFileDict = ParseCsv.GetCsvDict(NewFileName, PrimaryKey);
+            Console.WriteLine();
+            Console.WriteLine($"New File: {NewFileName}");
+            foreach (var key in newFileDict.Keys)
+            {
+                Console.WriteLine($"Key: {key}");
+                List<string> values = newFileDict[key];
+                foreach (var value in values)
+                {
+                    Console.WriteLine($"Key: {key}, Value: {value}");
+                }
+            }
+
+            // Display primary keys
+            if (PrimaryKey.Any() == true)
+            {
+                Console.WriteLine("Primary Key(s): ");
+                foreach (var key in PrimaryKey)
+                    Console.Write($"{key} ");
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine("Primary Key: 0 (Default Value)");
+            }
+
+        }
+
         static void Main(string[] args)
         {
             var parserResults = Parser.Default.ParseArguments<Options>(args);
             parserResults.WithParsed<Options>( opts => 
                     {
-                        Console.WriteLine($"OldFile: {opts.OldFile}");
-                        Console.WriteLine($"NewFile: {opts.NewFile}");
-                        if (opts.pKey.Any() == true)
-                        {
-                            Console.WriteLine("Primary Key(s): ");
-                            foreach (var key in opts.pKey)
-                                Console.Write($"{key} ");
-                            Console.WriteLine();
-                        }
-                        else
-                        {
-                            Console.WriteLine("Primary Key: 0 (Default Value)");
-                        }
+                        Run(opts.OldFile, opts.NewFile, opts.pKey);
                     });
         }
         /* public static Dictionary<string, string> CreateCsvDict(string file, int key) */
