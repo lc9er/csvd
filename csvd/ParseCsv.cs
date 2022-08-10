@@ -1,7 +1,5 @@
-using CsvHelper;
-using System.Collections.Generic;
-using System.Linq;
-using System.Globalization;
+using Sylvan.Data.Csv;
+using System.Text;
 
 namespace csvd
 {
@@ -19,57 +17,39 @@ namespace csvd
     // new Dictionary<string, List<string>> csvDict = new Dictionary<string, List<string>>()
     public static class ParseCsv
     {
-        public static string GetPrimaryKey(CsvReader line, IEnumerable<int> PrimaryKey)
+        public static string GetPrimaryKey(CsvDataReader line, IEnumerable<int> PrimaryKey)
         {
-            string pKey = "";
-            string pKeyField;
+            var pKey = new StringBuilder();
 
             foreach (var key in PrimaryKey)
-            {
-                line.TryGetField(key, out pKeyField);
-                pKey += pKeyField;
-            }
+                pKey.Append(line.GetString(key));
 
-            return pKey;
+            return pKey.ToString();
         }
 
-        public static List<string> GetCsvFields(CsvReader line)
+        public static IEnumerable<string> GetCsvFields(CsvDataReader line)
         {
-            List<string> CsvFieldValues = new List<string>();
-            string field;
-            
-            for (int i = 0; line.TryGetField<string>(i, out field); i++)
-            {
-                /* line.TryGetField<string>(i, out field); */
-                CsvFieldValues.Add(field);
-            }
+            var CsvValues = new List<string>();
 
-            return CsvFieldValues;
+            for (int i = 0; i < line.FieldCount; i++)
+                CsvValues.Add(line.GetString(i));
+
+            return CsvValues;
         }
 
         public static Dictionary<string, List<string>> GetCsvDict(string FilePath, IEnumerable<int> PrimaryKey)
         {
-            Dictionary<string, List<string>> CsvDict = new Dictionary<string, List<string>>();
+            var CsvDict = new Dictionary<string, List<string>>();
 
             try 
             {
-                var stream = File.ReadAllLines(FilePath);
-
-                foreach (var line in stream)
+                using CsvDataReader csv = CsvDataReader.Create(FilePath);
+                while(csv.Read())
                 {
-                    // Build dictionary, line by line
-                    using (var reader = new StringReader(line))
-                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                    {
-                        while(csv.Read())
-                        {
-                            // Get Primary Key
-                            string pKey = GetPrimaryKey(csv, PrimaryKey);
-                            List<string> CsvRowValues = GetCsvFields(csv);
-                            
-                            CsvDict.Add(pKey, CsvRowValues);
-                        }
-                    }
+                    // Get Primary Key, and csv row values
+                    string pKey = GetPrimaryKey(csv, PrimaryKey);
+                    List<string> CsvRowValues = GetCsvFields(csv).ToList();
+                    CsvDict.Add(pKey, CsvRowValues);
                 }
             }
 
