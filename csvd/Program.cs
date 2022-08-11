@@ -24,11 +24,11 @@ namespace csvd
             return modifiedKeys;
         }
 
-        static void Run(string OldFileName, string NewFileName, IEnumerable<int> PrimaryKey)
+        static void Run(string OldFileName, string NewFileName, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)
         {
             // create Dictionaries of pkey and csvrow values
-            Dictionary<string, List<string>> oldFileDict = ParseCsv.GetCsvDict(OldFileName, PrimaryKey);
-            Dictionary<string, List<string>> newFileDict = ParseCsv.GetCsvDict(NewFileName, PrimaryKey);
+            Dictionary<string, List<string>> oldFileDict = ParseCsv.GetCsvDict(OldFileName, PrimaryKey, ExcludeFields);
+            Dictionary<string, List<string>> newFileDict = ParseCsv.GetCsvDict(NewFileName, PrimaryKey, ExcludeFields);
 
             // Find keys unique to each
             var oldFileDictUnique = oldFileDict.Keys.Except(newFileDict.Keys);
@@ -57,7 +57,7 @@ namespace csvd
             var parserResults = Parser.Default.ParseArguments<Options>(args);
             parserResults.WithParsed<Options>(opts =>
                     {
-                        Run(opts.OldFile, opts.NewFile, opts.pKey);
+                        Run(opts.OldFile, opts.NewFile, opts.pKey, opts.excludeCols);
                     });
         }
     }
