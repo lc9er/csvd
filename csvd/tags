@@ -4,17 +4,22 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-GetCsvDict	ParseCsv.cs	/^        public Dictionary<string, List<string>> GetCsvDict(string FilePath, IEnumerable<int> PrimaryKey)$/;"	m	class:csvd.ParseCsv
-GetCsvFields	ParseCsv.cs	/^        public List<string> GetCsvFields(CsvReader line)$/;"	m	class:csvd.ParseCsv
-GetPrimaryKey	ParseCsv.cs	/^        public string GetPrimaryKey(CsvReader line, IEnumerable<int> PrimaryKey)$/;"	m	class:csvd.ParseCsv
+CsvFileDict	ParseCsv.cs	/^        public Dictionary<string, List<string>> CsvFileDict = new Dictionary<string, List<string>>();$/;"	f	class:csvd.ParseCsv
+GetCsvFields	ParseCsv.cs	/^        public static IEnumerable<string> GetCsvFields(CsvDataReader line, IEnumerable<int> ExcludeFields)$/;"	m	class:csvd.ParseCsv
+GetModifiedKeys	Program.cs	/^        static List<string> GetModifiedKeys(IEnumerable<string> sharedKeys,$/;"	m	class:csvd.csvd	file:
+GetPrimaryKey	ParseCsv.cs	/^        public static string GetPrimaryKey(CsvDataReader line, IEnumerable<int> PrimaryKey)$/;"	m	class:csvd.ParseCsv
 Main	Program.cs	/^        static void Main(string[] args)$/;"	m	class:csvd.csvd	file:
 NewFile	Options.cs	/^         public string? NewFile { get; set; }$/;"	p	class:csvd.Options
 OldFile	Options.cs	/^        public string? OldFile { get; set; }$/;"	p	class:csvd.Options
 Options	Options.cs	/^    public class Options$/;"	c	namespace:csvd
-ParseCsv	ParseCsv.cs	/^    public class ParseCsv$/;"	c	namespace:csvd
-Run	Program.cs	/^        static void Run(string OldFileName, string NewFileName, IEnumerable<int> PrimaryKey)$/;"	m	class:csvd.csvd	file:
+ParseCsv	ParseCsv.cs	/^        public ParseCsv(string FileName)$/;"	m	class:csvd.ParseCsv
+ParseCsv	ParseCsv.cs	/^    public static class ParseCsv$/;"	c	namespace:csvd
+Run	Program.cs	/^        static void Run(string OldFileName, string NewFileName, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)$/;"	m	class:csvd.csvd	file:
+SetCsvDict	ParseCsv.cs	/^        public static Dictionary<string, List<string>> SetCsvDict(string FilePath, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)$/;"	m	class:csvd.ParseCsv
 csvd	Options.cs	/^namespace csvd$/;"	n
 csvd	ParseCsv.cs	/^namespace csvd$/;"	n
 csvd	Program.cs	/^    public class csvd$/;"	c	namespace:csvd
-csvd	Program.cs	/^namespace csvd $/;"	n
+csvd	Program.cs	/^namespace csvd$/;"	n
+excludeCols	Options.cs	/^         public IEnumerable<int>? excludeCols { get; set; }$/;"	p	class:csvd.Options
+fileName	ParseCsv.cs	/^        public string fileName;$/;"	f	class:csvd.ParseCsv
 pKey	Options.cs	/^         public IEnumerable<int>? pKey { get; set; }$/;"	p	class:csvd.Options

@@ -3,9 +3,17 @@ using System.Text;
 
 namespace csvd
 {
-    public static class ParseCsv
+    public class ParseCsv
     {
-        public static string GetPrimaryKey(CsvDataReader line, IEnumerable<int> PrimaryKey)
+        public string fileName;
+        public Dictionary<string, List<string>> CsvFileDict = new Dictionary<string, List<string>>();
+
+        public ParseCsv(string FileName)
+        {
+            fileName = FileName;
+        }
+
+        public string GetPrimaryKey(CsvDataReader line, IEnumerable<int> PrimaryKey)
         {
             var pKey = new StringBuilder();
 
@@ -15,7 +23,7 @@ namespace csvd
             return pKey.ToString();
         }
 
-        public static IEnumerable<string> GetCsvFields(CsvDataReader line, IEnumerable<int> ExcludeFields)
+        public IEnumerable<string> GetCsvFields(CsvDataReader line, IEnumerable<int> ExcludeFields)
         {
             var CsvValues = new List<string>();
 
@@ -30,13 +38,13 @@ namespace csvd
             return CsvValues;
         }
 
-        public static Dictionary<string, List<string>> GetCsvDict(string FilePath, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)
+        public void SetCsvDict(IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)
         {
             var CsvDict = new Dictionary<string, List<string>>();
 
             try 
             {
-                using CsvDataReader csv = CsvDataReader.Create(FilePath);
+                using CsvDataReader csv = CsvDataReader.Create(fileName);
                 while(csv.Read())
                 {
                     // Get Primary Key, and csv row values
@@ -51,7 +59,7 @@ namespace csvd
                 Console.WriteLine(ex.Message);
             }
 
-            return CsvDict;
+            CsvFileDict = CsvDict;
         }
     }
 }
