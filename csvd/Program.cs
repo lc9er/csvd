@@ -13,25 +13,25 @@ namespace csvd
                     });
         }
 
-        static List<string> GetModifiedKeys(IEnumerable<string> sharedKeys,
-                Dictionary<string, List<string>> oldFileDict,
-                Dictionary<string, List<string>> newFileDict)
-        {
-            List<string> modifiedKeys = new List<string>();
+        /* static List<string> GetModifiedKeys(IEnumerable<string> sharedKeys, */
+        /*         Dictionary<string, List<string>> oldFileDict, */
+        /*         Dictionary<string, List<string>> newFileDict) */
+        /* { */
+        /*     List<string> modifiedKeys = new List<string>(); */
 
-            foreach (var key in sharedKeys)
-            {
-                List<string> oldVals = oldFileDict[key];
-                List<string> newVals = newFileDict[key];
+        /*     foreach (var key in sharedKeys) */
+        /*     { */
+        /*         List<string> oldVals = oldFileDict[key]; */
+        /*         List<string> newVals = newFileDict[key]; */
 
-                if (!(oldVals.SequenceEqual(newVals)))
-                {
-                    modifiedKeys.Add(key);
-                }
-            }
+        /*         if (!(oldVals.SequenceEqual(newVals))) */
+        /*         { */
+        /*             modifiedKeys.Add(key); */
+        /*         } */
+        /*     } */
 
-            return modifiedKeys;
-        }
+        /*     return modifiedKeys; */
+        /* } */
 
         static void Run(string OldFileName, string NewFileName, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)
         {
@@ -48,10 +48,10 @@ namespace csvd
             var newFileDictUnique = newFileDict.CsvFileDict.Keys.Except(oldFileDict.CsvFileDict.Keys);
 
             // Find shared keys, with differences
-            IEnumerable<string> both = oldFileDict.CsvFileDict.Keys.Intersect(newFileDict.CsvFileDict.Keys);
+            IEnumerable<string> sharedKeys = oldFileDict.CsvFileDict.Keys.Intersect(newFileDict.CsvFileDict.Keys);
 
             // Find shared keys, with differing values
-            var modifiedRows = GetModifiedKeys(both, oldFileDict.CsvFileDict, newFileDict.CsvFileDict);
+            var modifiedRows = oldFileDict.GetModifiedKeys(sharedKeys, newFileDict.CsvFileDict);
             foreach (var mod in modifiedRows)
             {
                 Console.WriteLine($"Old File: ");

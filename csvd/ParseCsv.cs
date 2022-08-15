@@ -13,6 +13,25 @@ namespace csvd
             fileName = FileName;
         }
 
+        public List<string> GetModifiedKeys(IEnumerable<string> sharedKeys,
+                Dictionary<string, List<string>> newFileDict)
+        {
+            List<string> modifiedKeys = new List<string>();
+
+            foreach (var key in sharedKeys)
+            {
+                List<string> oldVals = CsvFileDict[key];
+                List<string> newVals = newFileDict[key];
+
+                if (!(oldVals.SequenceEqual(newVals)))
+                {
+                    modifiedKeys.Add(key);
+                }
+            }
+
+            return modifiedKeys;
+        }
+
         public string GetPrimaryKey(CsvDataReader line, IEnumerable<int> PrimaryKey)
         {
             var pKey = new StringBuilder();
