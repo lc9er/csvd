@@ -15,6 +15,11 @@ namespace csvd
             HelpText = "Columns to exclude from diff.")]
          public IEnumerable<int>? excludeCols { get; set; }
 
+        [Option('d', "delimiter",
+            Default = ',',
+            HelpText = "Delimiter character. Defaults to comma.")]
+         public char delimiter { get; set; }
+
         [Value(0, MetaName = "Old csv file",
                 HelpText = "Old file version",
                 Required = true)]

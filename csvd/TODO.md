@@ -1,5 +1,5 @@
 # TODO
 
-- [ ] Separator parameter.
+- [x] Separator parameter.
 - [x] Exclude fields.
 - [ ] Spectre display.

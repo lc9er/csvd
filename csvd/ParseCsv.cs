@@ -6,11 +6,13 @@ namespace csvd
     public class ParseCsv
     {
         public string fileName;
+        public char delimiter;
         public Dictionary<string, List<string>> CsvFileDict = new Dictionary<string, List<string>>();
 
-        public ParseCsv(string FileName)
+        public ParseCsv(string FileName, char delimChar)
         {
             fileName = FileName;
+            delimiter = delimChar;
         }
 
         public List<string> GetModifiedKeys(IEnumerable<string> sharedKeys,
@@ -63,7 +65,8 @@ namespace csvd
 
             try 
             {
-                using CsvDataReader csv = CsvDataReader.Create(fileName);
+                var csvOpts = new CsvDataReaderOptions { Delimiter = delimiter };
+                using CsvDataReader csv = CsvDataReader.Create(fileName, csvOpts);
                 while(csv.Read())
                 {
                     // Get Primary Key, and csv row values
