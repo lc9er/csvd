@@ -2,3 +2,4 @@ csvd/obj/*
 csvd/bin/*
 csvd.tests/obj/*
 csvd.tests/bin/*
+tags
