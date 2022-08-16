@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using CommandLine.Text;
 
 namespace csvd
 {
@@ -6,11 +7,14 @@ namespace csvd
     {
         static void Main(string[] args)
         {
-            var parserResults = Parser.Default.ParseArguments<Options>(args);
-            parserResults.WithParsed<Options>(opts =>
+            var parser = new CommandLine.Parser(with => with.HelpWriter = null);
+            var parserResults = parser.ParseArguments<Options>(args);
+            parserResults
+                .WithParsed<Options>(opts =>
                     {
                         Run(opts.OldFile, opts.NewFile, opts.pKey, opts.excludeCols, opts.delimiter);
-                    });
+                    })
+                .WithNotParsed(errs => DisplayHelp(parserResults, errs));
         }
 
         static void Run(string OldFileName, string NewFileName, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields, char delimiter)
@@ -43,6 +47,18 @@ namespace csvd
                     Console.Write($"{val},");
                 Console.WriteLine();
             }
+        }
+
+        static void DisplayHelp<T>(ParserResult<T> result, IEnumerable<Error> errs)
+        {
+            var helpText = HelpText.AutoBuild(result, h =>
+            {
+                h.AdditionalNewLineAfterOption = false;
+                h.Heading = "csvd 1.0.0-beta";
+                h.Copyright = "Copyright (c) 2022 lc9er";
+                return HelpText.DefaultParsingErrorsHandler(result, h);
+            }, e => e);
+            Console.WriteLine(helpText);
         }
     }
 }
