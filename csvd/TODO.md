@@ -7,3 +7,4 @@
     - [ ] Title position.
     - [ ] Headers in display?
 - [x] Add descriptive text to help output.
+- [ ] Move excludes (and primary key(s)) to ParseCsv class?
