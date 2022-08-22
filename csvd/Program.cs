@@ -36,17 +36,10 @@ namespace csvd
 
             // Find shared keys, with differing values
             var modifiedRows = oldFileDict.GetModifiedKeys(sharedKeys, newFileDict.CsvFileDict);
-            foreach (var mod in modifiedRows)
-            {
-                Console.WriteLine($"Old File: ");
-                foreach (var val in oldFileDict.CsvFileDict[mod])
-                    Console.Write($"{val},");
-                Console.WriteLine();
-                Console.WriteLine($"New File: ");
-                foreach (var val in newFileDict.CsvFileDict[mod])
-                    Console.Write($"{val},");
-                Console.WriteLine();
-            }
+
+            // OutputTable
+            var additions = new OutputTable($"Additions - ({newFileDictUnique.Count()})");
+            additions.PrintSingleTable(newFileDictUnique, newFileDict); 
         }
 
         static void DisplayHelp<T>(ParserResult<T> result, IEnumerable<Error> errs)

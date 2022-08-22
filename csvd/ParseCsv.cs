@@ -8,6 +8,7 @@ namespace csvd
         public string fileName;
         public char delimiter;
         public Dictionary<string, List<string>> CsvFileDict = new Dictionary<string, List<string>>();
+        public List<string> header = new List<string>();
 
         public ParseCsv(string FileName, char delimChar)
         {
@@ -62,6 +63,7 @@ namespace csvd
         public void SetCsvDict(IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)
         {
             var CsvDict = new Dictionary<string, List<string>>();
+            bool headerRow = true;
 
             try 
             {
@@ -73,6 +75,11 @@ namespace csvd
                     string pKey = GetPrimaryKey(csv, PrimaryKey);
                     List<string> CsvRowValues = GetCsvFields(csv, ExcludeFields).ToList();
                     CsvDict.Add(pKey, CsvRowValues);
+                    if (headerRow)
+                    {
+                        header = CsvRowValues;
+                        headerRow = false;
+                    }
                 }
             }
 

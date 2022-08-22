@@ -3,4 +3,7 @@
 - [x] Separator parameter.
 - [x] Exclude fields.
 - [ ] Spectre display.
-- [ ] Add descriptive text to help output.
+    - [ ] Table styling.
+    - [ ] Title position.
+    - [ ] Headers in display?
+- [x] Add descriptive text to help output.
