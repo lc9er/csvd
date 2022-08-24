@@ -38,8 +38,14 @@ namespace csvd
             var modifiedRows = oldFileDict.GetModifiedKeys(sharedKeys, newFileDict.CsvFileDict);
 
             // OutputTable
-            var additions = new OutputTable($"Additions - ({newFileDictUnique.Count()})");
+            var additions = new OutputTable($"Additions - ({newFileDictUnique.Count()})", TableType.ADDITION);
             additions.PrintSingleTable(newFileDictUnique, newFileDict); 
+
+            var modifications = new OutputTable($"Modifications - ({modifiedRows.Count()})", TableType.DIFFERENCE);
+            modifications.PrintDifferenceTable(modifiedRows, oldFileDict, newFileDict);
+
+            var removals = new OutputTable($"Removals - ({oldFileDictUnique.Count()})", TableType.REMOVAL);
+            removals.PrintSingleTable(oldFileDictUnique, oldFileDict); 
         }
 
         static void DisplayHelp<T>(ParserResult<T> result, IEnumerable<Error> errs)

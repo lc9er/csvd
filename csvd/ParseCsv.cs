@@ -63,23 +63,27 @@ namespace csvd
         public void SetCsvDict(IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)
         {
             var CsvDict = new Dictionary<string, List<string>>();
-            bool headerRow = true;
 
             try 
             {
                 var csvOpts = new CsvDataReaderOptions { Delimiter = delimiter };
                 using CsvDataReader csv = CsvDataReader.Create(fileName, csvOpts);
+
+                // capture header row, minus excludes
+                for (int i = 0; i < csv.FieldCount; i++)
+                {
+                    if(!ExcludeFields.Contains(i))
+                    {
+                        header.Add(csv.GetName(i));
+                    }
+                }
+
                 while(csv.Read())
                 {
                     // Get Primary Key, and csv row values
                     string pKey = GetPrimaryKey(csv, PrimaryKey);
                     List<string> CsvRowValues = GetCsvFields(csv, ExcludeFields).ToList();
                     CsvDict.Add(pKey, CsvRowValues);
-                    if (headerRow)
-                    {
-                        header = CsvRowValues;
-                        headerRow = false;
-                    }
                 }
             }
 
