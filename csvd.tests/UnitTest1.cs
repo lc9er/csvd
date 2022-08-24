@@ -13,12 +13,12 @@ public class UnitTest1
     /*     Assert.Equal(value[1], ParsedArgs.NewFile); */
     /* } */
 
-    [Fact]
-    public void ParseCsv_Contructor()
-    {
-        string testFileName = "TestFile.csv";
-        ParseCsv myCsvObj = new ParseCsv(testFileName);
+    /* [Fact] */
+    /* public void ParseCsv_Contructor() */
+    /* { */
+    /*     string testFileName = "TestFile.csv"; */
+    /*     ParseCsv myCsvObj = new ParseCsv(testFileName); */
 
-        Assert.Equal(testFileName, myCsvObj.fileName);
-    }
+    /*     Assert.Equal(testFileName, myCsvObj.fileName); */
+    /* } */
 }

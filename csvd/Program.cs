@@ -53,7 +53,7 @@ namespace csvd
             var helpText = HelpText.AutoBuild(result, h =>
             {
                 h.AdditionalNewLineAfterOption = false;
-                h.Heading = "csvd 1.0.0-beta";
+                h.Heading = "csvd 1.0.0";
                 h.Copyright = "Copyright (c) 2022 lc9er";
                 return HelpText.DefaultParsingErrorsHandler(result, h);
             }, e => e);

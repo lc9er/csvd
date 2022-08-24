@@ -19,6 +19,18 @@ namespace csvd
             table.Title(title);
             tableColor = tableStyle;
         }
+        
+        public string[] FormatTableRow(string color, List<string> row)
+        {
+            var formattedRow = new List<string>();
+
+            foreach (var cell in row)
+            {
+                formattedRow.Add(color + cell + "[/]");
+            }
+
+            return formattedRow.ToArray();
+        }
 
         public void PrintDifferenceTable(List<string> modifiedKeys, ParseCsv oldCsv, ParseCsv newCsv)
         {
@@ -29,24 +41,10 @@ namespace csvd
             foreach (var key in modifiedKeys)
             {
                 var oldRow = oldCsv.CsvFileDict[key].ToList();
-                var oldOutputRow = new List<string>();
-
-                foreach (var cell in oldRow)
-                {
-                    oldOutputRow.Add("[orange1]" + cell + "[/]");
-                }
-
-                table.AddRow(oldOutputRow.ToArray());
+                table.AddRow(FormatTableRow("[orange1]", oldRow));
 
                 var newRow = newCsv.CsvFileDict[key].ToList();
-                var newOutputRow = new List<string>();
-
-                foreach (var cell in newRow)
-                {
-                    newOutputRow.Add("[blue]" + cell + "[/]");
-                }
-                
-                table.AddRow(newOutputRow.ToArray());
+                table.AddRow(FormatTableRow("[blue]", newRow));
             }
 
             AnsiConsole.Write(table);
@@ -58,10 +56,6 @@ namespace csvd
 
             // Build, but hide header columns
             table.AddColumns(CsvObj.header.ToArray());
-            /* foreach (var col in CsvObj.header) */
-            /* { */
-            /*     table.AddColumn(col); */
-            /* } */
 
             // value coloring
             switch (tableColor)
@@ -80,14 +74,7 @@ namespace csvd
             foreach (var key in keys)
             {
                 var row = CsvObj.CsvFileDict[key].ToList();
-                var outputRow = new List<string>();
-
-                foreach (var cell in row)
-                {
-                    outputRow.Add(cellColor + cell + "[/]");
-                }
-
-                table.AddRow(outputRow.ToArray());
+                table.AddRow(FormatTableRow(cellColor, row));
             }
 
             AnsiConsole.Write(table);
