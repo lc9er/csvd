@@ -18,7 +18,7 @@ I regularly work with versioned csv files, where there are changes to fields I c
 # INSPIRATION
 
 [xsv](https://github.com/BurntSushi/xsv) - BurntSushi's incredible xsv utility is crazy fast and
-offers a huge array of functionality.[[BR]]
+offers a huge array of functionality.  
 [csvdiff](https://github.com/aswinkarthik/csvdiff) - csvdiff tool in Go. Faster than mine. 
 
 # PLANS
