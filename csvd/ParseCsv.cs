@@ -7,13 +7,17 @@ namespace csvd
     {
         public string fileName;
         public char delimiter;
-        public Dictionary<string, List<string>> CsvFileDict = new Dictionary<string, List<string>>();
+        public IEnumerable<int> primaryKey;
+        public IEnumerable<int> excludeFields;
+        public Dictionary<string, List<string>> csvFileDict = new Dictionary<string, List<string>>();
         public List<string> header = new List<string>();
 
-        public ParseCsv(string FileName, char delimChar)
+        public ParseCsv(string FileName, char DelimChar, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)
         {
-            fileName = FileName;
-            delimiter = delimChar;
+            fileName      = FileName;
+            delimiter     = DelimChar;
+            primaryKey    = PrimaryKey;
+            excludeFields = ExcludeFields;
         }
 
         public List<string> GetModifiedKeys(IEnumerable<string> sharedKeys,
@@ -23,7 +27,7 @@ namespace csvd
 
             foreach (var key in sharedKeys)
             {
-                List<string> oldVals = CsvFileDict[key];
+                List<string> oldVals = csvFileDict[key];
                 List<string> newVals = newFileDict[key];
 
                 if (!(oldVals.SequenceEqual(newVals)))
@@ -35,23 +39,23 @@ namespace csvd
             return modifiedKeys;
         }
 
-        public string GetPrimaryKey(CsvDataReader line, IEnumerable<int> PrimaryKey)
+        public string GetPrimaryKey(CsvDataReader line)
         {
             var pKey = new StringBuilder();
 
-            foreach (var key in PrimaryKey)
+            foreach (var key in primaryKey)
                 pKey.Append(line.GetString(key));
 
             return pKey.ToString();
         }
 
-        public IEnumerable<string> GetCsvFields(CsvDataReader line, IEnumerable<int> ExcludeFields)
+        public IEnumerable<string> GetCsvFields(CsvDataReader line)
         {
             var CsvValues = new List<string>();
 
             for (int i = 0; i < line.FieldCount; i++)
             {
-                if(!ExcludeFields.Contains(i))
+                if(!excludeFields.Contains(i))
                 {
                     CsvValues.Add(line.GetString(i));
                 }
@@ -60,7 +64,7 @@ namespace csvd
             return CsvValues;
         }
 
-        public void SetCsvDict(IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)
+        public void SetCsvDict()
         {
             var CsvDict = new Dictionary<string, List<string>>();
 
@@ -72,7 +76,7 @@ namespace csvd
                 // capture header row, minus excludes
                 for (int i = 0; i < csv.FieldCount; i++)
                 {
-                    if(!ExcludeFields.Contains(i))
+                    if(!excludeFields.Contains(i))
                     {
                         header.Add(csv.GetName(i));
                     }
@@ -81,8 +85,8 @@ namespace csvd
                 while(csv.Read())
                 {
                     // Get Primary Key, and csv row values
-                    string pKey = GetPrimaryKey(csv, PrimaryKey);
-                    List<string> CsvRowValues = GetCsvFields(csv, ExcludeFields).ToList();
+                    string pKey = GetPrimaryKey(csv);
+                    List<string> CsvRowValues = GetCsvFields(csv).ToList();
                     CsvDict.Add(pKey, CsvRowValues);
                 }
             }
@@ -92,7 +96,7 @@ namespace csvd
                 Console.WriteLine(ex.Message);
             }
 
-            CsvFileDict = CsvDict;
+            csvFileDict = CsvDict;
         }
     }
 }

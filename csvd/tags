@@ -4,23 +4,29 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-CsvFileDict	ParseCsv.cs	/^        public Dictionary<string, List<string>> CsvFileDict = new Dictionary<string, List<string>>();$/;"	f	class:csvd.ParseCsv
+ADDITION	Output.cs	/^        ADDITION,$/;"	e	enum:csvd.TableType	file:
+DIFFERENCE	Output.cs	/^        DIFFERENCE$/;"	e	enum:csvd.TableType	file:
 DisplayHelp	Program.cs	/^        static void DisplayHelp<T>(ParserResult<T> result, IEnumerable<Error> errs)$/;"	m	class:csvd.csvd	file:
 Examples	Options.cs	/^        public static IEnumerable<Example> Examples$/;"	p	class:csvd.Options
-GetCsvFields	ParseCsv.cs	/^        public IEnumerable<string> GetCsvFields(CsvDataReader line, IEnumerable<int> ExcludeFields)$/;"	m	class:csvd.ParseCsv
+FormatTableRow	Output.cs	/^        public string[] FormatTableRow(string color, List<string> row)$/;"	m	class:csvd.OutputTable
+GetCsvFields	ParseCsv.cs	/^        public IEnumerable<string> GetCsvFields(CsvDataReader line)$/;"	m	class:csvd.ParseCsv
 GetModifiedKeys	ParseCsv.cs	/^        public List<string> GetModifiedKeys(IEnumerable<string> sharedKeys,$/;"	m	class:csvd.ParseCsv
-GetPrimaryKey	ParseCsv.cs	/^        public string GetPrimaryKey(CsvDataReader line, IEnumerable<int> PrimaryKey)$/;"	m	class:csvd.ParseCsv
+GetPrimaryKey	ParseCsv.cs	/^        public string GetPrimaryKey(CsvDataReader line)$/;"	m	class:csvd.ParseCsv
 Main	Program.cs	/^        static void Main(string[] args)$/;"	m	class:csvd.csvd	file:
 NewFile	Options.cs	/^        public string? NewFile { get; set; }$/;"	p	class:csvd.Options
 OldFile	Options.cs	/^        public string? OldFile { get; set; }$/;"	p	class:csvd.Options
 Options	Options.cs	/^    public class Options$/;"	c	namespace:csvd
-OutputTable	Output.cs	/^        public OutputTable(string title)$/;"	m	class:csvd.OutputTable
+OutputTable	Output.cs	/^        public OutputTable(string title, TableType tableStyle)$/;"	m	class:csvd.OutputTable
 OutputTable	Output.cs	/^    class OutputTable$/;"	c	namespace:csvd
-ParseCsv	ParseCsv.cs	/^        public ParseCsv(string FileName, char delimChar)$/;"	m	class:csvd.ParseCsv
+ParseCsv	ParseCsv.cs	/^        public ParseCsv(string FileName, char DelimChar, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)$/;"	m	class:csvd.ParseCsv
 ParseCsv	ParseCsv.cs	/^    public class ParseCsv$/;"	c	namespace:csvd
-PrintSingleTable	Output.cs	/^        public void PrintSingleTable(List<string> keys, Dictionary<string, List<string>> csvDict)$/;"	m	class:csvd.OutputTable
+PrintDifferenceTable	Output.cs	/^        public void PrintDifferenceTable(List<string> modifiedKeys, ParseCsv oldCsv, ParseCsv newCsv)$/;"	m	class:csvd.OutputTable
+PrintSingleTable	Output.cs	/^        public void PrintSingleTable(IEnumerable<string> keys, ParseCsv CsvObj)$/;"	m	class:csvd.OutputTable
+REMOVAL	Output.cs	/^        REMOVAL,$/;"	e	enum:csvd.TableType	file:
 Run	Program.cs	/^        static void Run(string OldFileName, string NewFileName, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields, char delimiter)$/;"	m	class:csvd.csvd	file:
-SetCsvDict	ParseCsv.cs	/^        public void SetCsvDict(IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)$/;"	m	class:csvd.ParseCsv
+SetCsvDict	ParseCsv.cs	/^        public void SetCsvDict()$/;"	m	class:csvd.ParseCsv
+TableType	Output.cs	/^    public enum TableType$/;"	g	namespace:csvd
+csvFileDict	ParseCsv.cs	/^        public Dictionary<string, List<string>> csvFileDict = new Dictionary<string, List<string>>();$/;"	f	class:csvd.ParseCsv
 csvd	Options.cs	/^namespace csvd$/;"	n
 csvd	Output.cs	/^namespace csvd$/;"	n
 csvd	ParseCsv.cs	/^namespace csvd$/;"	n
@@ -29,6 +35,10 @@ csvd	Program.cs	/^namespace csvd$/;"	n
 delimiter	Options.cs	/^        public char delimiter { get; set; }$/;"	p	class:csvd.Options
 delimiter	ParseCsv.cs	/^        public char delimiter;$/;"	f	class:csvd.ParseCsv
 excludeCols	Options.cs	/^        public IEnumerable<int>? excludeCols { get; set; }$/;"	p	class:csvd.Options
+excludeFields	ParseCsv.cs	/^        public IEnumerable<int> excludeFields;$/;"	f	class:csvd.ParseCsv
 fileName	ParseCsv.cs	/^        public string fileName;$/;"	f	class:csvd.ParseCsv
+header	ParseCsv.cs	/^        public List<string> header = new List<string>();$/;"	f	class:csvd.ParseCsv
 pKey	Options.cs	/^        public IEnumerable<int>? pKey { get; set; }$/;"	p	class:csvd.Options
+primaryKey	ParseCsv.cs	/^        public IEnumerable<int> primaryKey;$/;"	f	class:csvd.ParseCsv
 table	Output.cs	/^        public Table table = new Table();$/;"	f	class:csvd.OutputTable
+tableColor	Output.cs	/^        public TableType tableColor;$/;"	f	class:csvd.OutputTable

@@ -4,7 +4,7 @@
 - [x] Exclude fields.
 - [x] Spectre display.
     - [x] Table styling.
-    - [ ] Title position.
+    - [c] Title position.
     - [x] Headers in display?
 - [x] Add descriptive text to help output.
-- [ ] Move excludes (and primary key(s)) to ParseCsv class?
+- [x] Move excludes (and primary key(s)) to ParseCsv class?

@@ -40,10 +40,10 @@ namespace csvd
 
             foreach (var key in modifiedKeys)
             {
-                var oldRow = oldCsv.CsvFileDict[key].ToList();
+                var oldRow = oldCsv.csvFileDict[key].ToList();
                 table.AddRow(FormatTableRow("[orange1]", oldRow));
 
-                var newRow = newCsv.CsvFileDict[key].ToList();
+                var newRow = newCsv.csvFileDict[key].ToList();
                 table.AddRow(FormatTableRow("[blue]", newRow));
             }
 
@@ -73,7 +73,7 @@ namespace csvd
 
             foreach (var key in keys)
             {
-                var row = CsvObj.CsvFileDict[key].ToList();
+                var row = CsvObj.csvFileDict[key].ToList();
                 table.AddRow(FormatTableRow(cellColor, row));
             }
 

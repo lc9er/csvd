@@ -1,4 +1,4 @@
-﻿using CommandLine;
+using CommandLine;
 using CommandLine.Text;
 
 namespace csvd
@@ -20,22 +20,22 @@ namespace csvd
         static void Run(string OldFileName, string NewFileName, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields, char delimiter)
         {
             // Instantiate ParseCsv objs
-            var oldFileDict = new ParseCsv(OldFileName, delimiter);
-            var newFileDict = new ParseCsv(NewFileName, delimiter);
+            var oldFileDict = new ParseCsv(OldFileName, delimiter, PrimaryKey, ExcludeFields);
+            var newFileDict = new ParseCsv(NewFileName, delimiter, PrimaryKey, ExcludeFields);
 
             // create Dictionaries of pkey and csvrow values
-            oldFileDict.SetCsvDict(PrimaryKey, ExcludeFields);
-            newFileDict.SetCsvDict(PrimaryKey, ExcludeFields);
+            oldFileDict.SetCsvDict();
+            newFileDict.SetCsvDict();
 
             // Find keys unique to each
-            var oldFileDictUnique = oldFileDict.CsvFileDict.Keys.Except(newFileDict.CsvFileDict.Keys);
-            var newFileDictUnique = newFileDict.CsvFileDict.Keys.Except(oldFileDict.CsvFileDict.Keys);
+            var oldFileDictUnique = oldFileDict.csvFileDict.Keys.Except(newFileDict.csvFileDict.Keys);
+            var newFileDictUnique = newFileDict.csvFileDict.Keys.Except(oldFileDict.csvFileDict.Keys);
 
             // Find shared keys, with differences
-            IEnumerable<string> sharedKeys = oldFileDict.CsvFileDict.Keys.Intersect(newFileDict.CsvFileDict.Keys);
+            IEnumerable<string> sharedKeys = oldFileDict.csvFileDict.Keys.Intersect(newFileDict.csvFileDict.Keys);
 
             // Find shared keys, with differing values
-            var modifiedRows = oldFileDict.GetModifiedKeys(sharedKeys, newFileDict.CsvFileDict);
+            var modifiedRows = oldFileDict.GetModifiedKeys(sharedKeys, newFileDict.csvFileDict);
 
             // OutputTable
             var additions = new OutputTable($"Additions - ({newFileDictUnique.Count()})", TableType.ADDITION);
