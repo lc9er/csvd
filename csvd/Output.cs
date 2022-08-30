@@ -19,23 +19,19 @@ namespace csvd
             table.Title(title);
             tableColor = tableStyle;
         }
-        
+
         public string[] FormatTableRow(string color, List<string> row)
         {
             var formattedRow = new List<string>();
 
             foreach (var cell in row)
-            {
                 formattedRow.Add(color + cell + "[/]");
-            }
 
             return formattedRow.ToArray();
         }
 
         public void PrintDifferenceTable(List<string> modifiedKeys, ParseCsv oldCsv, ParseCsv newCsv)
         {
-            int rowCount = 0;
-
             table.AddColumns(oldCsv.header.ToArray());
 
             foreach (var key in modifiedKeys)

@@ -14,9 +14,9 @@ namespace csvd
 
         public ParseCsv(string FileName, char DelimChar, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)
         {
-            fileName      = FileName;
-            delimiter     = DelimChar;
-            primaryKey    = PrimaryKey;
+            fileName = FileName;
+            delimiter = DelimChar;
+            primaryKey = PrimaryKey;
             excludeFields = ExcludeFields;
         }
 
@@ -31,9 +31,7 @@ namespace csvd
                 List<string> newVals = newFileDict[key];
 
                 if (!(oldVals.SequenceEqual(newVals)))
-                {
                     modifiedKeys.Add(key);
-                }
             }
 
             return modifiedKeys;
@@ -54,12 +52,8 @@ namespace csvd
             var CsvValues = new List<string>();
 
             for (int i = 0; i < line.FieldCount; i++)
-            {
-                if(!excludeFields.Contains(i))
-                {
+                if (!excludeFields.Contains(i))
                     CsvValues.Add(line.GetString(i));
-                }
-            }
 
             return CsvValues;
         }
@@ -68,21 +62,17 @@ namespace csvd
         {
             var CsvDict = new Dictionary<string, List<string>>();
 
-            try 
+            try
             {
                 var csvOpts = new CsvDataReaderOptions { Delimiter = delimiter };
                 using CsvDataReader csv = CsvDataReader.Create(fileName, csvOpts);
 
                 // capture header row, minus excludes
                 for (int i = 0; i < csv.FieldCount; i++)
-                {
-                    if(!excludeFields.Contains(i))
-                    {
+                    if (!excludeFields.Contains(i))
                         header.Add(csv.GetName(i));
-                    }
-                }
 
-                while(csv.Read())
+                while (csv.Read())
                 {
                     // Get Primary Key, and csv row values
                     string pKey = GetPrimaryKey(csv);
