@@ -34,8 +34,6 @@ namespace csvd
 
         public void PrintDifferenceTable(List<string> modifiedKeys, ParseCsv oldCsv, ParseCsv newCsv)
         {
-            int rowCount = 0;
-
             table.AddColumns(oldCsv.header.ToArray());
 
             foreach (var key in modifiedKeys)

@@ -12,12 +12,12 @@ namespace csvd
             parserResults
                 .WithParsed<Options>(opts =>
                     {
-                        Run(opts.OldFile, opts.NewFile, opts.pKey, opts.excludeCols, opts.delimiter);
+                        Run(opts.OldFile, opts.NewFile, opts.pKey.ToList(), opts.excludeCols.ToList(), opts.delimiter);
                     })
                 .WithNotParsed(errs => DisplayHelp(parserResults, errs));
         }
 
-        static void Run(string OldFileName, string NewFileName, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields, char delimiter)
+        static void Run(string OldFileName, string NewFileName, List<int> PrimaryKey, List<int> ExcludeFields, char delimiter)
         {
             // Instantiate ParseCsv objs
             var oldFileDict = new ParseCsv(OldFileName, delimiter, PrimaryKey, ExcludeFields);
@@ -28,11 +28,11 @@ namespace csvd
             newFileDict.SetCsvDict();
 
             // Find keys unique to each
-            var oldFileDictUnique = oldFileDict.csvFileDict.Keys.Except(newFileDict.csvFileDict.Keys);
-            var newFileDictUnique = newFileDict.csvFileDict.Keys.Except(oldFileDict.csvFileDict.Keys);
+            var oldFileDictUnique = oldFileDict.csvFileDict.Keys.Except(newFileDict.csvFileDict.Keys).ToList();
+            var newFileDictUnique = newFileDict.csvFileDict.Keys.Except(oldFileDict.csvFileDict.Keys).ToList();
 
             // Find shared keys, with differences
-            IEnumerable<string> sharedKeys = oldFileDict.csvFileDict.Keys.Intersect(newFileDict.csvFileDict.Keys);
+            List<string> sharedKeys = oldFileDict.csvFileDict.Keys.Intersect(newFileDict.csvFileDict.Keys).ToList();
 
             // Find shared keys, with differing values
             var modifiedRows = oldFileDict.GetModifiedKeys(sharedKeys, newFileDict.csvFileDict);
