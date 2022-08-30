@@ -7,12 +7,12 @@ namespace csvd
     {
         public string fileName;
         public char delimiter;
-        public IEnumerable<int> primaryKey;
-        public IEnumerable<int> excludeFields;
+        public List<int> primaryKey;
+        public List<int> excludeFields;
         public Dictionary<string, List<string>> csvFileDict = new Dictionary<string, List<string>>();
         public List<string> header = new List<string>();
 
-        public ParseCsv(string FileName, char DelimChar, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)
+        public ParseCsv(string FileName, char DelimChar, List<int> PrimaryKey, List<int> ExcludeFields)
         {
             fileName = FileName;
             delimiter = DelimChar;
@@ -20,7 +20,7 @@ namespace csvd
             excludeFields = ExcludeFields;
         }
 
-        public List<string> GetModifiedKeys(IEnumerable<string> sharedKeys,
+        public List<string> GetModifiedKeys(List<string> sharedKeys,
                 Dictionary<string, List<string>> newFileDict)
         {
             List<string> modifiedKeys = new List<string>();
@@ -47,7 +47,7 @@ namespace csvd
             return pKey.ToString();
         }
 
-        public IEnumerable<string> GetCsvFields(CsvDataReader line)
+        public List<string> GetCsvFields(CsvDataReader line)
         {
             var CsvValues = new List<string>();
 
@@ -55,7 +55,7 @@ namespace csvd
                 if (!excludeFields.Contains(i))
                     CsvValues.Add(line.GetString(i));
 
-            return CsvValues;
+            return CsvValues.ToList();
         }
 
         public void SetCsvDict()
@@ -76,7 +76,7 @@ namespace csvd
                 {
                     // Get Primary Key, and csv row values
                     string pKey = GetPrimaryKey(csv);
-                    List<string> CsvRowValues = GetCsvFields(csv).ToList();
+                    List<string> CsvRowValues = GetCsvFields(csv);
                     CsvDict.Add(pKey, CsvRowValues);
                 }
             }
