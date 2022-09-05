@@ -1,3 +1,4 @@
+csvd/nupkg/
 csvd/obj/*
 csvd/bin/*
 csvd.tests/obj/*
