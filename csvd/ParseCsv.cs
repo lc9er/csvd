@@ -5,12 +5,28 @@ namespace csvd
 {
     public class ParseCsv
     {
-        public string fileName;
-        public char delimiter;
-        public List<int> primaryKey;
-        public List<int> excludeFields;
-        public Dictionary<string, List<string>> csvFileDict = new Dictionary<string, List<string>>();
-        public List<string> header = new List<string>();
+        private string fileName;
+        private char delimiter;
+        private List<int> primaryKey;
+        private List<int> excludeFields;
+        private Dictionary<string, List<string>> csvFileDict = new Dictionary<string, List<string>>();
+        private List<string> header = new List<string>();
+
+        public List<string> Header
+        {
+            get
+            {
+                return header;
+            }
+        }
+
+        public Dictionary<string, List<string>> CsvFileDict
+        {
+            get
+            {
+                return csvFileDict;
+            }
+        }
 
         public ParseCsv(string FileName, char DelimChar, List<int> PrimaryKey, List<int> ExcludeFields)
         {

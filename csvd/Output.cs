@@ -32,14 +32,14 @@ namespace csvd
 
         public void PrintDifferenceTable(List<string> modifiedKeys, ParseCsv oldCsv, ParseCsv newCsv)
         {
-            table.AddColumns(oldCsv.header.ToArray());
+            table.AddColumns(oldCsv.Header.ToArray());
 
             foreach (var key in modifiedKeys)
             {
-                var oldRow = oldCsv.csvFileDict[key].ToList();
+                var oldRow = oldCsv.CsvFileDict[key].ToList();
                 table.AddRow(FormatTableRow("[orange1]", oldRow));
 
-                var newRow = newCsv.csvFileDict[key].ToList();
+                var newRow = newCsv.CsvFileDict[key].ToList();
                 table.AddRow(FormatTableRow("[blue]", newRow));
             }
 
@@ -51,7 +51,7 @@ namespace csvd
             string cellColor;
 
             // Build, but hide header columns
-            table.AddColumns(CsvObj.header.ToArray());
+            table.AddColumns(CsvObj.Header.ToArray());
 
             // value coloring
             switch (tableColor)
@@ -69,7 +69,7 @@ namespace csvd
 
             foreach (var key in keys)
             {
-                var row = CsvObj.csvFileDict[key].ToList();
+                var row = CsvObj.CsvFileDict[key].ToList();
                 table.AddRow(FormatTableRow(cellColor, row));
             }
 

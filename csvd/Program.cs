@@ -28,24 +28,24 @@ namespace csvd
             newFileDict.SetCsvDict();
 
             // Find keys unique to each
-            var oldFileDictUnique = oldFileDict.csvFileDict.Keys.Except(newFileDict.csvFileDict.Keys).ToList();
-            var newFileDictUnique = newFileDict.csvFileDict.Keys.Except(oldFileDict.csvFileDict.Keys).ToList();
+            var oldFileDictUnique = oldFileDict.CsvFileDict.Keys.Except(newFileDict.CsvFileDict.Keys).ToList();
+            var newFileDictUnique = newFileDict.CsvFileDict.Keys.Except(oldFileDict.CsvFileDict.Keys).ToList();
 
             // Find shared keys, with differences
-            List<string> sharedKeys = oldFileDict.csvFileDict.Keys.Intersect(newFileDict.csvFileDict.Keys).ToList();
+            List<string> sharedKeys = oldFileDict.CsvFileDict.Keys.Intersect(newFileDict.CsvFileDict.Keys).ToList();
 
             // Find shared keys, with differing values
-            var modifiedRows = oldFileDict.GetModifiedKeys(sharedKeys, newFileDict.csvFileDict);
+            var modifiedRows = oldFileDict.GetModifiedKeys(sharedKeys, newFileDict.CsvFileDict);
 
             // OutputTable
             var additions = new OutputTable($"Additions - ({newFileDictUnique.Count()})", TableType.ADDITION);
-            additions.PrintSingleTable(newFileDictUnique, newFileDict); 
+            additions.PrintSingleTable(newFileDictUnique, newFileDict);
 
             var modifications = new OutputTable($"Modifications - ({modifiedRows.Count()})", TableType.DIFFERENCE);
             modifications.PrintDifferenceTable(modifiedRows, oldFileDict, newFileDict);
 
             var removals = new OutputTable($"Removals - ({oldFileDictUnique.Count()})", TableType.REMOVAL);
-            removals.PrintSingleTable(oldFileDictUnique, oldFileDict); 
+            removals.PrintSingleTable(oldFileDictUnique, oldFileDict);
         }
 
         static void DisplayHelp<T>(ParserResult<T> result, IEnumerable<Error> errs)
