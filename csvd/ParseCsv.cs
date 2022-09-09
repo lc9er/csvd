@@ -93,13 +93,22 @@ namespace csvd
                     // Get Primary Key, and csv row values
                     string pKey = GetPrimaryKey(csv);
                     List<string> CsvRowValues = GetCsvFields(csv);
-                    CsvDict.Add(pKey, CsvRowValues);
+                    try
+                    {
+                        CsvDict.Add(pKey, CsvRowValues);
+                    }
+                    catch (ArgumentException)
+                    {
+                        Console.WriteLine($"Duplicate primary key {pKey} found in {fileName}.");
+                        Environment.Exit(1);
+                    }
                 }
             }
 
             catch (FileNotFoundException ex)
             {
                 Console.WriteLine(ex.Message);
+                Environment.Exit(1);
             }
 
             csvFileDict = CsvDict;

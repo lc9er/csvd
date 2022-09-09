@@ -8,5 +8,7 @@
     - [x] Headers in display?
 - [x] Add descriptive text to help output.
 - [x] Move excludes (and primary key(s)) to ParseCsv class?
-- [ ] Exception for bad file path
-- [ ] Exception for duplicate primary keys
+- [x] Exception for bad file path
+- [x] Exception for duplicate primary keys
+- [ ] Move ParseCsv to classlib
+- [ ] Create Powershell module
