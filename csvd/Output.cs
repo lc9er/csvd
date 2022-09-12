@@ -30,17 +30,62 @@ namespace csvd
             return formattedRow.ToArray();
         }
 
+        // Overloaded version for cell diffs
+        public string[] FormatTableRow(string color, List<string> row, List<int> diffs)
+        {
+            int rowSize = row.Count();
+            var formattedRow = new List<string>();
+
+            for (int i = 0; i < rowSize; i++)
+            {
+                string styledColor;
+
+                // add bold to cells that differ 
+                if (diffs.Contains(i))
+                {
+                    styledColor = "[red]";
+                }
+                else
+                {
+                    styledColor = color;
+                }
+
+                formattedRow.Add(styledColor + row[i] + "[/]");
+            }
+
+            return formattedRow.ToArray();
+        }
+
+        private List<int> FindRowDiffereces(List<string> oldRow, List<string> newRow)
+        {
+            int rowSize = oldRow.Count();
+            List<int> cellDiffs = new List<int>();
+
+            for (int i = 0; i < rowSize; i++)
+            {
+                if (!oldRow[i].Equals(newRow[i]))
+                {
+                    cellDiffs.Add(i);
+                }
+            }
+
+            return cellDiffs;
+        }
+
         public void PrintDifferenceTable(List<string> modifiedKeys, ParseCsv oldCsv, ParseCsv newCsv)
         {
+
             table.AddColumns(oldCsv.Header.ToArray());
 
             foreach (var key in modifiedKeys)
             {
+                List<int> diffs = new List<int>();
                 var oldRow = oldCsv.CsvFileDict[key].ToList();
-                table.AddRow(FormatTableRow("[orange1]", oldRow));
-
                 var newRow = newCsv.CsvFileDict[key].ToList();
-                table.AddRow(FormatTableRow("[blue]", newRow));
+
+                diffs = FindRowDiffereces(oldRow, newRow);
+                table.AddRow(FormatTableRow("[orange1]", oldRow, diffs));
+                table.AddRow(FormatTableRow("[blue]", newRow, diffs));
             }
 
             AnsiConsole.Write(table);
