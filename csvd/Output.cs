@@ -9,7 +9,7 @@ namespace csvd
         DIFFERENCE
     }
 
-    class OutputTable
+    public class OutputTable
     {
         public Table table = new Table();
         public TableType tableColor;
