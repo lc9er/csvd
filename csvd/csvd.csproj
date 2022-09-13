@@ -14,7 +14,10 @@
     <ItemGroup>
         <PackageReference Include="CommandLineParser" Version="2.9.1" />
         <PackageReference Include="Spectre.Console" Version="0.44.0" />
-        <PackageReference Include="Sylvan.Data.Csv" Version="1.1.16" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\csvd.lib\csvd.lib.csproj" />
     </ItemGroup>
 
 </Project>

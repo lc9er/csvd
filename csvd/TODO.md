@@ -9,8 +9,9 @@
     - [x] Highlight changes for 'Modifications' section.
 - [x] Add descriptive text to help output.
 - [x] Move excludes (and primary key(s)) to ParseCsv class?
-- [x] Exception for bad file path
-- [x] Exception for duplicate primary keys
-- [ ] Move ParseCsv to classlib
-- [ ] Create Powershell module
-- [ ] output ONLY additions, removals, or modifications
+- [x] Exception for bad file path.
+- [x] Exception for duplicate primary keys.
+- [x] Move ParseCsv to classlib.
+- [ ] Unit tests.
+- [ ] Create Powershell module.
+- [ ] output ONLY additions, removals, or modifications.
