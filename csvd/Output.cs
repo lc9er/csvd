@@ -20,21 +20,24 @@ namespace csvd
             tableColor = tableStyle;
         }
 
-        public string[] FormatTableRow(string color, List<string> row)
+        public Markup[] FormatTableRow(string color, List<string> row)
         {
-            var formattedRow = new List<string>();
+            int rowSize = row.Count();
+            var formattedRow = new Markup[rowSize];
 
-            foreach (var cell in row)
-                formattedRow.Add(color + cell + "[/]");
+            for(int i = 0; i < rowSize; i++)
+            {
+                formattedRow[i] = new Markup(color + Markup.Escape(row[i]) + "[/]");
+            }
 
-            return formattedRow.ToArray();
+            return formattedRow;
         }
 
         // Overloaded version for cell diffs
-        public string[] FormatTableRow(string color, List<string> row, List<int> diffs)
+        public Markup[] FormatTableRow(string color, List<string> row, List<int> diffs)
         {
             int rowSize = row.Count();
-            var formattedRow = new List<string>();
+            var formattedRow = new Markup[rowSize];
 
             for (int i = 0; i < rowSize; i++)
             {
@@ -50,10 +53,10 @@ namespace csvd
                     styledColor = color;
                 }
 
-                formattedRow.Add(styledColor + row[i] + "[/]");
+                formattedRow[i] = new Markup(styledColor + Markup.Escape(row[i]) + "[/]");
             }
 
-            return formattedRow.ToArray();
+            return formattedRow;
         }
 
         private List<int> FindRowDiffereces(List<string> oldRow, List<string> newRow)
