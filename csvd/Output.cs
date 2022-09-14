@@ -17,6 +17,7 @@ namespace csvd
         public OutputTable(string title, TableType tableStyle)
         {
             table.Title(title);
+            table.Border = TableBorder.Simple;
             tableColor = tableStyle;
         }
 
@@ -25,7 +26,7 @@ namespace csvd
             int rowSize = row.Count();
             var formattedRow = new Markup[rowSize];
 
-            for(int i = 0; i < rowSize; i++)
+            for (int i = 0; i < rowSize; i++)
             {
                 formattedRow[i] = new Markup(color + Markup.Escape(row[i]) + "[/]");
             }

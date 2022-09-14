@@ -1,3 +1,4 @@
-obj/
+obj
+bin
 Data/m*.csv
 tags
