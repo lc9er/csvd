@@ -1,6 +1,6 @@
 csvd/nupkg/
 csvd/obj/*
 csvd/bin/*
-csvd.tests/obj/*
-csvd.tests/bin/*
+csvd.lib/obj/*
+csvd.lib/bin/*
 tags
