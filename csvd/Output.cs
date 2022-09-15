@@ -23,7 +23,7 @@ namespace csvd
 
         public Markup[] FormatTableRow(string color, List<string> row)
         {
-            int rowSize = row.Count();
+            int rowSize = row.Count;
             var formattedRow = new Markup[rowSize];
 
             for (int i = 0; i < rowSize; i++)
@@ -37,7 +37,7 @@ namespace csvd
         // Overloaded version for cell diffs
         public Markup[] FormatTableRow(string color, List<string> row, List<int> diffs)
         {
-            int rowSize = row.Count();
+            int rowSize = row.Count;
             var formattedRow = new Markup[rowSize];
 
             for (int i = 0; i < rowSize; i++)
@@ -62,7 +62,7 @@ namespace csvd
 
         private List<int> FindRowDiffereces(List<string> oldRow, List<string> newRow)
         {
-            int rowSize = oldRow.Count();
+            int rowSize = oldRow.Count;
             List<int> cellDiffs = new List<int>();
 
             for (int i = 0; i < rowSize; i++)
