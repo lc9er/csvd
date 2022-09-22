@@ -1,0 +1,4 @@
+- [x] Project dependencies
+- [ ] cli arg parsing
+- [ ] combine headers (duplicate issue?)
+- [ ] unit tests

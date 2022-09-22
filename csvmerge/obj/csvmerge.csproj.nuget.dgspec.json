@@ -1,0 +1,67 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/bjm25/csvd/csvmerge/csvmerge.csproj": {}
+  },
+  "projects": {
+    "/home/bjm25/csvd/csvmerge/csvmerge.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/bjm25/csvd/csvmerge/csvmerge.csproj",
+        "projectName": "csvmerge",
+        "projectPath": "/home/bjm25/csvd/csvmerge/csvmerge.csproj",
+        "packagesPath": "/home/bjm25/.nuget/packages/",
+        "outputPath": "/home/bjm25/csvd/csvmerge/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/bjm25/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "CommandLineParser": {
+              "target": "Package",
+              "version": "[2.9.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.401/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

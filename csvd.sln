@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csvd", "csvd\csvd.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csvd.lib", "csvd.lib\csvd.lib.csproj", "{43E40348-B5D1-4326-8E96-45D748947936}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csvmerge", "csvmerge\csvmerge.csproj", "{644FBD3D-53C3-4698-B53F-3C9DBF4063D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csvmerge.tests", "csvmerge.tests\csvmerge.tests.csproj", "{1063375C-992E-46A6-8C68-5B4B1409A5E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{43E40348-B5D1-4326-8E96-45D748947936}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43E40348-B5D1-4326-8E96-45D748947936}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43E40348-B5D1-4326-8E96-45D748947936}.Release|Any CPU.Build.0 = Release|Any CPU
+		{644FBD3D-53C3-4698-B53F-3C9DBF4063D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{644FBD3D-53C3-4698-B53F-3C9DBF4063D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{644FBD3D-53C3-4698-B53F-3C9DBF4063D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{644FBD3D-53C3-4698-B53F-3C9DBF4063D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1063375C-992E-46A6-8C68-5B4B1409A5E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1063375C-992E-46A6-8C68-5B4B1409A5E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1063375C-992E-46A6-8C68-5B4B1409A5E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1063375C-992E-46A6-8C68-5B4B1409A5E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

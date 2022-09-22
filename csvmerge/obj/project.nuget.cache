@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "V0FHIoDiXQ+by+r872q/M5glWRwQ65VE2DY3cbFJdQ7jkz995knAWLY9b4RKNi00SU3IQ0h5Ns1r5JUKfjZ5RA==",
+  "success": true,
+  "projectFilePath": "/home/bjm25/csvd/csvmerge/csvmerge.csproj",
+  "expectedPackageFiles": [
+    "/home/bjm25/.nuget/packages/commandlineparser/2.9.1/commandlineparser.2.9.1.nupkg.sha512"
+  ],
+  "logs": []
+}
