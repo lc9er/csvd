@@ -4,3 +4,5 @@ csvd/bin/*
 csvd.lib/obj/*
 csvd.lib/bin/*
 tags
+.vs/
+.vscode/
