@@ -15,6 +15,7 @@
 - [ ] Move 'find unique keys' to class lib
 - [ ] Move 'find shared keys, with diff vals' to class lib
 - [ ] Create interface for data access (to support additional filetypes)
+    - [ ] Datareader interface returns dictionary of file content.
 - [ ] Unit tests.
 - [ ] Create Powershell module.
 - [ ] output ONLY additions, removals, or modifications.
