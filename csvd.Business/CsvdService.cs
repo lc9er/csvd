@@ -20,13 +20,8 @@ public class CsvdService : ICsvd
         return modifiedKeys;
     }
 
-    public List<string> GetUniqueKeys(List<string> oldKeys, List<string> newKeys)
-    {
-        return oldKeys.Except(newKeys).ToList();
-    }
+    public List<string> GetUniqueKeys(List<string> oldKeys, List<string> newKeys) => oldKeys.Except(newKeys).ToList();
 
-    public List<string> GetSharedKeys(List<string> oldKeys, List<string> newKeys)
-    {
-        return oldKeys.Intersect(newKeys).ToList();
-    }
+    public List<string> GetSharedKeys(List<string> oldKeys, List<string> newKeys) => oldKeys.Intersect(newKeys).ToList();
+
 }
