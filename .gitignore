@@ -1,8 +1,6 @@
 csvd/nupkg/
-csvd/obj/*
-csvd/bin/*
-csvd.lib/obj/*
-csvd.lib/bin/*
+*/obj/*
+*/bin/*
 tags
 .vs/
 .vscode/
