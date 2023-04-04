@@ -1,9 +1,8 @@
-﻿using csvd.Data.csvd.Data;
-using csvd.Domain.Model;
+﻿using csvd.Domain.Model;
 using Sylvan.Data.Csv;
 using System.Text;
 
-namespace csvd.Data;
+namespace csvd.Data.csvd.Data;
 
 public class ParseCsv : IDataAccess
 {
