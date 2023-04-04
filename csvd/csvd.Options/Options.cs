@@ -44,5 +44,16 @@ namespace csvd.UI.csvd.Options
                     new Options { OldFile = "OldFile.csv", NewFile = "NewFile.csv", delimiter = ':' });
             }
         }
+        public static void DisplayHelp<T>(ParserResult<T> result, IEnumerable<Error> errs)
+        {
+            var helpText = HelpText.AutoBuild(result, h =>
+            {
+                h.AdditionalNewLineAfterOption = false;
+                h.Heading = "csvd 2.0.0";
+                h.Copyright = "Copyright (c) 2022 lc9er";
+                return HelpText.DefaultParsingErrorsHandler(result, h);
+            }, e => e);
+            Console.WriteLine(helpText);
+        }
     }
 }

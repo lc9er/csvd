@@ -14,14 +14,12 @@
 
     <ItemGroup>
         <PackageReference Include="CommandLineParser" Version="2.9.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
         <PackageReference Include="Spectre.Console" Version="0.46.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\csvd.Business\csvd.Business.csproj" />
-      <ProjectReference Include="..\csvd.Data\csvd.Data.csproj" />
-      <ProjectReference Include="..\csvd.Domain\csvd.Domain.csproj" />
-      <ProjectReference Include="..\csvd.Data\csvd.Data.csproj" />
+      <ProjectReference Include="..\csvd.Library\csvd.Library.csproj" />
     </ItemGroup>
 
 </Project>

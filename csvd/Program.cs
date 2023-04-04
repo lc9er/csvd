@@ -1,10 +1,8 @@
 using CommandLine;
 using CommandLine.Text;
-using csvd.Business;
-using csvd.Business.Interfaces;
-using csvd.Data;
-using csvd.Data.csvd.Data;
-using csvd.Domain.Model;
+using csvd.Library;
+using csvd.Library.Interfaces;
+using csvd.Library.Model;
 using csvd.UI.csvd.Options;
 using csvd.UI.csvd.View;
 
@@ -21,7 +19,7 @@ public class Csvd
                 {
                     Run(opts.OldFile, opts.NewFile, opts.pKey.ToList(), opts.excludeCols.ToList(), opts.delimiter);
                 })
-            .WithNotParsed(errs => DisplayHelp(parserResults, errs));
+            .WithNotParsed(errs => Options.DisplayHelp(parserResults, errs));
     }
 
     static void Run(string OldFileName, string NewFileName, List<int> PrimaryKey, List<int> ExcludeFields, char delimiter)
@@ -45,7 +43,6 @@ public class Csvd
         List<string> sharedKeys = csvd.GetSharedKeys(oldFileDict.Keys.ToList(), newFileDict.Keys.ToList());
 
         // Find shared keys, with differing values
-        // var modifiedRows = oldFileDict.GetModifiedKeys(sharedKeys, newFileDict.CsvFileDict);
         var modifiedRows = csvd.GetModifiedKeys(sharedKeys, oldFileDict, newFileDict);
 
         // OutputTable
@@ -57,17 +54,5 @@ public class Csvd
 
         var removals = new OutputTable($"[orange1]Removals - ({oldFileDictUnique.Count})[/]", TableType.REMOVAL);
         removals.PrintSingleTable(oldFileDictUnique, oldFileDict, oldFile.header);
-    }
-
-    static void DisplayHelp<T>(ParserResult<T> result, IEnumerable<Error> errs)
-    {
-        var helpText = HelpText.AutoBuild(result, h =>
-        {
-            h.AdditionalNewLineAfterOption = false;
-            h.Heading = "csvd 2.0.0";
-            h.Copyright = "Copyright (c) 2022 lc9er";
-            return HelpText.DefaultParsingErrorsHandler(result, h);
-        }, e => e);
-        Console.WriteLine(helpText);
     }
 }
