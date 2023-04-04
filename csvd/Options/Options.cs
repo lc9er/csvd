@@ -1,7 +1,7 @@
 using CommandLine;
 using CommandLine.Text;
 
-namespace csvd.UI.csvd.Options
+namespace csvd.UI.Options
 {
     public class Options
     {
@@ -49,7 +49,7 @@ namespace csvd.UI.csvd.Options
             var helpText = HelpText.AutoBuild(result, h =>
             {
                 h.AdditionalNewLineAfterOption = false;
-                h.Heading = "csvd 2.0.1";
+                h.Heading = "csvd 2.0.2";
                 h.Copyright = "Copyright (c) 2022 lc9er";
                 return HelpText.DefaultParsingErrorsHandler(result, h);
             }, e => e);

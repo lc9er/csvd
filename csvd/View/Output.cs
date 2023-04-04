@@ -1,6 +1,6 @@
 using Spectre.Console;
 
-namespace csvd.UI.csvd.View;
+namespace csvd.UI.View;
 
 public enum TableType
 {
@@ -78,8 +78,8 @@ public class OutputTable
             var newRow = newCsv[key].ToList();
 
             var diffs = FindRowDiffereces(oldRow, newRow);
-            table.AddRow(FormatTableRow("[orange1]", oldRow, new List<int>()));
-            table.AddRow(FormatTableRow("[blue]", newRow, new List<int>()));
+            table.AddRow(FormatTableRow("[orange1]", oldRow, diffs));
+            table.AddRow(FormatTableRow("[blue]", newRow, diffs));
         }
 
         AnsiConsole.Write(table);

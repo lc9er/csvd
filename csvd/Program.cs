@@ -3,8 +3,8 @@ using CommandLine.Text;
 using csvd.Library;
 using csvd.Library.Interfaces;
 using csvd.Library.Model;
-using csvd.UI.csvd.Options;
-using csvd.UI.csvd.View;
+using csvd.UI.Options;
+using csvd.UI.View;
 
 namespace csvd;
 
