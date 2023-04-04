@@ -11,7 +11,7 @@ public enum TableType
 
 public class OutputTable
 {
-    public Table table = new ();
+    public Table table = new();
     public TableType tableColor;
 
     public OutputTable(string title, TableType tableStyle)
@@ -27,9 +27,7 @@ public class OutputTable
         var formattedRow = new Markup[rowSize];
 
         for (int i = 0; i < rowSize; i++)
-        {
             formattedRow[i] = new Markup(color + Markup.Escape(row[i]) + "[/]");
-        }
 
         return formattedRow;
     }
@@ -44,20 +42,28 @@ public class OutputTable
         {
             string styledColor;
 
-            // add bold to cells that differ 
+            // make cells that differ red 
             if (diffs.Contains(i))
-            {
                 styledColor = "[red]";
-            }
             else
-            {
                 styledColor = color;
-            }
 
             formattedRow[i] = new Markup(styledColor + Markup.Escape(row[i]) + "[/]");
         }
 
         return formattedRow;
+    }
+
+    private List<int> FindRowDiffereces(List<string> oldRow, List<string> newRow)
+    {
+        int rowSize = oldRow.Count;
+        List<int> cellDiffs = new List<int>();
+
+        for (int i = 0; i < rowSize; i++)
+            if (!oldRow[i].Equals(newRow[i]))
+                cellDiffs.Add(i);
+
+        return cellDiffs;
     }
 
     public void PrintDifferenceTable(List<string> modifiedKeys, Dictionary<string, List<string>> oldCsv,
@@ -71,6 +77,7 @@ public class OutputTable
             var oldRow = oldCsv[key].ToList();
             var newRow = newCsv[key].ToList();
 
+            var diffs = FindRowDiffereces(oldRow, newRow);
             table.AddRow(FormatTableRow("[orange1]", oldRow, new List<int>()));
             table.AddRow(FormatTableRow("[blue]", newRow, new List<int>()));
         }
@@ -86,16 +93,13 @@ public class OutputTable
 
         string cellColor = tableColor switch
         {
-            TableType.ADDITION => "[blue]",
-            TableType.REMOVAL  => "[orange1]",
-            _                  => "[white]",
+            TableType.ADDITION  => "[blue]",
+            TableType.REMOVAL   => "[orange1]",
+            _                   => "[white]",
         };
 
         foreach (var key in keys)
-        {
-            var row = CsvObj[key].ToList();
-            table.AddRow(FormatTableRow(cellColor, row));
-        }
+            table.AddRow(FormatTableRow(cellColor, CsvObj[key].ToList()));
 
         AnsiConsole.Write(table);
     }
