@@ -15,7 +15,7 @@
 - [x] Move 'find unique keys' to class lib
 - [x] Move 'find shared keys, with diff vals' to class lib
 - [x] Create interface for data access (to support additional filetypes)
-- [ ] Update for use with Microsoft.Extensions.Hosting
+- [x] Update for use with Microsoft.Extensions.Hosting
 - [ ] Use Spectre for writing exceptions.
     - [ ] Logging
 - [ ] Update Spectre to live table display.

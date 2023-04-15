@@ -8,12 +8,12 @@ csvd OldCsvFile.csv NewCsvFile.csv -p 0 -e 1 3
 ```
 
 diff two csv files, using a common primary key(s). The exclude parameter lets you remove one or more
-field from the comparison.
+fields from the comparison.
 
 # JUSTIFICATION
 
 I regularly work with versioned csv files, where there are changes to fields I can safely ignore
-(often fields with datetime values). I also wanted to a chance to try out Spectre.Console.
+(typically datetime values). I also wanted to a chance to try out Spectre.Console.
 
 # INSPIRATION
 
@@ -23,4 +23,4 @@ offers a huge array of functionality.
 
 # PLANS
 
-Convert logic to library for use with Powershell.
+Add binary Powershell cmdlets for use in scripting.
