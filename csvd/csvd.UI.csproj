@@ -9,8 +9,8 @@
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>csvd</ToolCommandName>
         <PackageOutputPath>./nupkg</PackageOutputPath>
-        <Version>2.0.2</Version>
-        <FileVersion>2.0.2</FileVersion>
+        <Version>2.0.3</Version>
+        <FileVersion>2.0.3</FileVersion>
     </PropertyGroup>
 
     <ItemGroup>

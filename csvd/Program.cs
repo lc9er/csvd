@@ -1,5 +1,4 @@
 using CommandLine;
-using CommandLine.Text;
 using csvd.Library;
 using csvd.Library.Interfaces;
 using csvd.Library.Model;

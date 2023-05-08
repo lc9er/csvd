@@ -1,7 +1,6 @@
 ﻿using csvd.Library.Interfaces;
 using csvd.Library.Model;
 using Sylvan.Data.Csv;
-using System.Text;
 
 namespace csvd.Library;
 
@@ -48,12 +47,12 @@ public class ParseCsv : IDataAccess
     }
     public static string GetPrimaryKey(CsvDataReader line, List<int> primaryKey)
     {
-        var pKey = new StringBuilder();
+        string pKey = null;
 
         foreach (var key in primaryKey)
-            pKey.Append(line.GetString(key));
+            pKey += line.GetString(key);
 
-        return pKey.ToString();
+        return pKey;
     }
 
     public static List<string> GetCsvFields(CsvDataReader line, List<int> excludeFields)
