@@ -45,6 +45,10 @@ public class ParseCsv : IDataAccess
 
         return CsvDict;
     }
+
+    // This adds 16% to runtime
+    //public static string GetPrimaryKey(CsvDataReader line, List<int> primaryKey) =>
+    //    string.Concat(primaryKey.Select(line.GetString));
     public static string GetPrimaryKey(CsvDataReader line, List<int> primaryKey)
     {
         string pKey = null;
