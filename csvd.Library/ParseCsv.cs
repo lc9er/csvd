@@ -6,19 +6,19 @@ namespace csvd.Library;
 
 public class ParseCsv : IDataAccess
 {
-    public Dictionary<string, List<string>> GetData(CsvFile csvFile)
+    public CsvDict GetData(CsvFile csvFile)
     {
-        var CsvDict = new Dictionary<string, List<string>>();
+        var csvDict = new CsvDict();
 
         try
         {
-            var csvOpts = new CsvDataReaderOptions { Delimiter = csvFile.delimiter };
-            using CsvDataReader csv = CsvDataReader.Create(csvFile.fileName, csvOpts);
+            var csvOpts = new CsvDataReaderOptions { Delimiter = csvFile.delimiter.DelimChar};
+            using CsvDataReader csv = CsvDataReader.Create(csvFile.fileName.Filename, csvOpts);
 
             // capture header row, minus excludes
             for (int i = 0; i < csv.FieldCount; i++)
-                if (!csvFile.excludeFields.Contains(i))
-                    csvFile.header.Add(csv.GetName(i));
+                if (!csvFile.excludeFields.Exclude.Contains(i))
+                    csvFile.header.Header.Add(csv.GetName(i));
 
             while (csv.Read())
             {
@@ -27,11 +27,11 @@ public class ParseCsv : IDataAccess
                 List<string> CsvRowValues = GetCsvFields(csv, csvFile.excludeFields);
                 try
                 {
-                    CsvDict.Add(pKey, CsvRowValues);
+                    csvDict.csvDict.Add(pKey, CsvRowValues);
                 }
                 catch (ArgumentException)
                 {
-                    Console.WriteLine($"Duplicate primary key {pKey} found in {csvFile.fileName}.");
+                    Console.WriteLine($"Duplicate primary key {pKey} found in {csvFile.fileName.Filename}.");
                     Environment.Exit(1);
                 }
             }
@@ -43,28 +43,28 @@ public class ParseCsv : IDataAccess
             Environment.Exit(1);
         }
 
-        return CsvDict;
+        return csvDict;
     }
 
     // This adds 16% to runtime
     //public static string GetPrimaryKey(CsvDataReader line, List<int> primaryKey) =>
     //    string.Concat(primaryKey.Select(line.GetString));
-    public static string GetPrimaryKey(CsvDataReader line, List<int> primaryKey)
+    public static string GetPrimaryKey(CsvDataReader line, PrimaryKey primaryKey)
     {
         string pKey = null;
 
-        foreach (var key in primaryKey)
+        foreach (var key in primaryKey.PKey)
             pKey += line.GetString(key);
 
         return pKey;
     }
 
-    public static List<string> GetCsvFields(CsvDataReader line, List<int> excludeFields)
+    public static List<string> GetCsvFields(CsvDataReader line, ExcludeFields excludeFields)
     {
         var CsvValues = new List<string>();
 
         for (int i = 0; i < line.FieldCount; i++)
-            if (!excludeFields.Contains(i))
+            if (!excludeFields.Exclude.Contains(i))
                 CsvValues.Add(line.GetString(i));
 
         return CsvValues.ToList();

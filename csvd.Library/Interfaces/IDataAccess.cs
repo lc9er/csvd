@@ -4,5 +4,5 @@ namespace csvd.Library.Interfaces;
 
 public interface IDataAccess
 {
-    Dictionary<string, List<string>> GetData(CsvFile csvFile);
+    CsvDict GetData(CsvFile csvFile);
 }

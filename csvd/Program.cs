@@ -35,23 +35,23 @@ public class Csvd
         var newFileDict = dataAccess.GetData(newFile);
 
         // Find keys unique to each
-        List<string> oldFileDictUnique = csvd.GetUniqueKeys(oldFileDict.Keys.ToList(), newFileDict.Keys.ToList());
-        List<string> newFileDictUnique = csvd.GetUniqueKeys(newFileDict.Keys.ToList(), oldFileDict.Keys.ToList());
+        List<string> oldFileDictUnique = csvd.GetUniqueKeys(oldFileDict.csvDict.Keys.ToList(), newFileDict.csvDict.Keys.ToList());
+        List<string> newFileDictUnique = csvd.GetUniqueKeys(newFileDict.csvDict.Keys.ToList(), oldFileDict.csvDict.Keys.ToList());
 
         // Find shared keys, with differences
-        List<string> sharedKeys = csvd.GetSharedKeys(oldFileDict.Keys.ToList(), newFileDict.Keys.ToList());
+        List<string> sharedKeys = csvd.GetSharedKeys(oldFileDict.csvDict.Keys.ToList(), newFileDict.csvDict.Keys.ToList());
 
         // Find shared keys, with differing values
-        var modifiedRows = csvd.GetModifiedKeys(sharedKeys, oldFileDict, newFileDict);
+        var modifiedRows = csvd.GetModifiedKeys(sharedKeys, oldFileDict.csvDict, newFileDict.csvDict);
 
         // OutputTable
         var additions = new OutputTable($"[blue]Additions - ({newFileDictUnique.Count})[/]", TableType.ADDITION);
-        additions.PrintSingleTable(newFileDictUnique, newFileDict, newFile.header);
+        additions.PrintSingleTable(newFileDictUnique, newFileDict.csvDict, newFile.header.Header);
 
         var modifications = new OutputTable($"[red]Modifications - ({modifiedRows.Count})[/]", TableType.DIFFERENCE);
-        modifications.PrintDifferenceTable(modifiedRows, oldFileDict, newFileDict, newFile.header);
+        modifications.PrintDifferenceTable(modifiedRows, oldFileDict.csvDict, newFileDict.csvDict, newFile.header.Header);
 
         var removals = new OutputTable($"[orange1]Removals - ({oldFileDictUnique.Count})[/]", TableType.REMOVAL);
-        removals.PrintSingleTable(oldFileDictUnique, oldFileDict, oldFile.header);
+        removals.PrintSingleTable(oldFileDictUnique, oldFileDict.csvDict, oldFile.header.Header);
     }
 }
