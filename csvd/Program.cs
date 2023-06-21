@@ -35,23 +35,23 @@ public class Csvd
         var newFileDict = dataAccess.GetData(newFile);
 
         // Find keys unique to each
-        List<string> oldFileDictUnique = csvd.GetUniqueKeys(oldFileDict.csvDict.Keys.ToList(), newFileDict.csvDict.Keys.ToList());
-        List<string> newFileDictUnique = csvd.GetUniqueKeys(newFileDict.csvDict.Keys.ToList(), oldFileDict.csvDict.Keys.ToList());
+        IEnumerable<string> oldFileDictUnique = csvd.GetUniqueKeys(oldFileDict.csvDict.Keys, newFileDict.csvDict.Keys);
+        IEnumerable<string> newFileDictUnique = csvd.GetUniqueKeys(newFileDict.csvDict.Keys, oldFileDict.csvDict.Keys);
 
         // Find shared keys, with differences
-        List<string> sharedKeys = csvd.GetSharedKeys(oldFileDict.csvDict.Keys.ToList(), newFileDict.csvDict.Keys.ToList());
+        IEnumerable<string> sharedKeys = csvd.GetSharedKeys(oldFileDict.csvDict.Keys, newFileDict.csvDict.Keys);
 
         // Find shared keys, with differing values
-        var modifiedRows = csvd.GetModifiedKeys(sharedKeys, oldFileDict.csvDict, newFileDict.csvDict);
+        var modifiedRows = csvd.GetModifiedKeys(sharedKeys, oldFileDict, newFileDict);
 
         // OutputTable
-        var additions = new OutputTable($"[blue]Additions - ({newFileDictUnique.Count})[/]", TableType.ADDITION);
-        additions.PrintSingleTable(newFileDictUnique, newFileDict.csvDict, newFile.header.Header);
+        var additions = new OutputTable($"[blue]Additions[/]", TableType.ADDITION);
+        additions.PrintSingleTable(newFileDictUnique, newFileDict, newFile.header);
 
-        var modifications = new OutputTable($"[red]Modifications - ({modifiedRows.Count})[/]", TableType.DIFFERENCE);
-        modifications.PrintDifferenceTable(modifiedRows, oldFileDict.csvDict, newFileDict.csvDict, newFile.header.Header);
+        var modifications = new OutputTable($"[red]Modifications[/]", TableType.DIFFERENCE);
+        modifications.PrintDifferenceTable(modifiedRows, oldFileDict, newFileDict, newFile.header);
 
-        var removals = new OutputTable($"[orange1]Removals - ({oldFileDictUnique.Count})[/]", TableType.REMOVAL);
-        removals.PrintSingleTable(oldFileDictUnique, oldFileDict.csvDict, oldFile.header.Header);
+        var removals = new OutputTable($"[orange1]Removals[/]", TableType.REMOVAL);
+        removals.PrintSingleTable(oldFileDictUnique, oldFileDict, oldFile.header);
     }
 }

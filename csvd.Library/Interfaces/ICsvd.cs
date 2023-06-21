@@ -1,11 +1,13 @@
-﻿namespace csvd.Library.Interfaces;
+﻿using csvd.Library.Model;
+
+namespace csvd.Library.Interfaces;
 
 public interface ICsvd
 {
-    List<string> GetModifiedKeys(List<string> sharedKeys,
-        Dictionary<string, List<string>> oldFileDict,
-        Dictionary<string, List<string>> newFileDict);
+    IEnumerable<string> GetModifiedKeys(IEnumerable<string> sharedKeys,
+        CsvDict oldFileDict,
+        CsvDict newFileDict);
 
-    List<string> GetUniqueKeys(List<string> oldKeys, List<string> newKeys);
-    List<string> GetSharedKeys(List<string> oldKeys, List<string> newKeys);
+    IEnumerable<string> GetUniqueKeys(IEnumerable<string> oldKeys, IEnumerable<string> newKeys);
+    IEnumerable<string> GetSharedKeys(IEnumerable<string> oldKeys, IEnumerable<string> newKeys);
 }

@@ -1,4 +1,6 @@
+using csvd.Library.Model;
 using Spectre.Console;
+using System.Security.Cryptography;
 
 namespace csvd.UI.View;
 
@@ -18,10 +20,10 @@ public class OutputTable
     {
         table.Title(title);
         table.Border = TableBorder.Simple;
-        tableColor = tableStyle;
+        tableColor   = tableStyle;
     }
 
-    public Markup[] FormatTableRow(string color, List<string> row)
+    public static Markup[] FormatTableRow(string color, List<string> row)
     {
         int rowSize = row.Count;
         var formattedRow = new Markup[rowSize];
@@ -33,49 +35,35 @@ public class OutputTable
     }
 
     // Overloaded version for cell diffs
-    public Markup[] FormatTableRow(string color, List<string> row, List<int> diffs)
+    public static Markup[] FormatTableRow(string color, List<string> row, List<int> diffs)
     {
         int rowSize = row.Count;
         var formattedRow = new Markup[rowSize];
 
         for (int i = 0; i < rowSize; i++)
         {
-            string styledColor;
-
-            // make cells that differ red 
-            if (diffs.Contains(i))
-                styledColor = "[red]";
-            else
-                styledColor = color;
-
+            string styledColor = diffs.Contains(i) ? "[red]" : color;
             formattedRow[i] = new Markup(styledColor + Markup.Escape(row[i]) + "[/]");
         }
 
         return formattedRow;
     }
 
-    private List<int> FindRowDiffereces(List<string> oldRow, List<string> newRow)
-    {
-        int rowSize = oldRow.Count;
-        List<int> cellDiffs = new List<int>();
+    private static List<int> FindRowDiffereces(List<string> oldRow, List<string> newRow) =>
+        Enumerable.Range(0, oldRow.Count)
+            .Where(x => oldRow[x] != newRow[x])
+            .ToList();
 
-        for (int i = 0; i < rowSize; i++)
-            if (!oldRow[i].Equals(newRow[i]))
-                cellDiffs.Add(i);
-
-        return cellDiffs;
-    }
-
-    public void PrintDifferenceTable(List<string> modifiedKeys, Dictionary<string, List<string>> oldCsv,
-        Dictionary<string, List<string>> newCsv, List<string> header)
+    public void PrintDifferenceTable(IEnumerable<string> modifiedKeys, CsvDict oldCsv,
+        CsvDict newCsv, HeaderRow header)
     {
 
-        table.AddColumns(header.ToArray());
+        table.AddColumns(header.Header.ToArray());
 
         foreach (var key in modifiedKeys)
         {
-            var oldRow = oldCsv[key].ToList();
-            var newRow = newCsv[key].ToList();
+            var oldRow = oldCsv.csvDict[key].ToList();
+            var newRow = newCsv.csvDict[key].ToList();
 
             var diffs = FindRowDiffereces(oldRow, newRow);
             table.AddRow(FormatTableRow("[orange1]", oldRow, diffs));
@@ -85,11 +73,11 @@ public class OutputTable
         AnsiConsole.Write(table);
     }
 
-    public void PrintSingleTable(IEnumerable<string> keys, Dictionary<string, List<string>> CsvObj, List<string> header)
+    public void PrintSingleTable(IEnumerable<string> keys, CsvDict CsvObj, HeaderRow header)
     {
 
         // Build, but hide header columns
-        table.AddColumns(header.ToArray());
+        table.AddColumns(header.Header.ToArray());
 
         string cellColor = tableColor switch
         {
@@ -99,7 +87,7 @@ public class OutputTable
         };
 
         foreach (var key in keys)
-            table.AddRow(FormatTableRow(cellColor, CsvObj[key].ToList()));
+            table.AddRow(FormatTableRow(cellColor, CsvObj.csvDict[key].ToList()));
 
         AnsiConsole.Write(table);
     }

@@ -39,7 +39,7 @@ public class HeaderRow
 
 public class CsvDict
 {
-    public Dictionary<string, List<string>> csvDict = new();
+    public Dictionary<string, IEnumerable<string>> csvDict = new();
 
     public CsvDict() { }
 }

@@ -24,7 +24,7 @@ public class ParseCsv : IDataAccess
             {
                 // Get Primary Key, and csv row values
                 string pKey = GetPrimaryKey(csv, csvFile.primaryKey);
-                List<string> CsvRowValues = GetCsvFields(csv, csvFile.excludeFields);
+                IEnumerable<string> CsvRowValues = GetCsvFields(csv, csvFile.excludeFields);
                 try
                 {
                     csvDict.csvDict.Add(pKey, CsvRowValues);
@@ -46,8 +46,8 @@ public class ParseCsv : IDataAccess
         return csvDict;
     }
 
-    // This adds 16% to runtime
-    //public static string GetPrimaryKey(CsvDataReader line, List<int> primaryKey) =>
+    // NOTE: This adds 16% to runtime
+    // public static string GetPrimaryKey(CsvDataReader line, List<int> primaryKey) =>
     //    string.Concat(primaryKey.Select(line.GetString));
     public static string GetPrimaryKey(CsvDataReader line, PrimaryKey primaryKey)
     {
@@ -59,7 +59,8 @@ public class ParseCsv : IDataAccess
         return pKey;
     }
 
-    public static List<string> GetCsvFields(CsvDataReader line, ExcludeFields excludeFields)
+    // LINQ here slows down 15%+
+    public static IEnumerable<string> GetCsvFields(CsvDataReader line, ExcludeFields excludeFields)
     {
         var CsvValues = new List<string>();
 
