@@ -62,11 +62,17 @@ public class ParseCsv : IDataAccess
     // LINQ here slows down 15%+
     public static IEnumerable<string> GetCsvFields(CsvDataReader line, ExcludeFields excludeFields)
     {
-        var CsvValues = new List<string>();
+        int rowSize = line.FieldCount - excludeFields.Exclude.Length;
+        string[] CsvValues = new string[rowSize];
 
+        // populate CsvValues
+        int index = 0;
         for (int i = 0; i < line.FieldCount; i++)
             if (!excludeFields.Exclude.Contains(i))
-                CsvValues.Add(line.GetString(i));
+            {
+                CsvValues[index] = line.GetString(i);
+                index++;
+            }
 
         return CsvValues.ToList();
     }

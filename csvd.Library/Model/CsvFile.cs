@@ -1,28 +1,26 @@
-﻿using System.Collections.Immutable;
-
-namespace csvd.Library.Model;
+﻿namespace csvd.Library.Model;
 
 public record FileName(string Filename);
 public record Delimiter(char DelimChar);
 public class PrimaryKey
 {
-    public List<int> PKey = new();
+    public int[] PKey;
 
     public PrimaryKey() { }
-    public PrimaryKey(List<int> pKey)
+    public PrimaryKey(IEnumerable<int> pKey)
     {
-        PKey = pKey;
+        PKey = pKey.ToArray();
     }
 }
 
 public class ExcludeFields
 {
-    public List<int> Exclude = new();
+    public int[] Exclude;
 
     public ExcludeFields() { }
-    public ExcludeFields(List<int> exclude)
+    public ExcludeFields(IEnumerable<int> exclude)
     {
-        Exclude = exclude;
+        Exclude = exclude.ToArray();
     }
 }
 
@@ -53,7 +51,7 @@ public class CsvFile
     public CsvDict       csvFileDict;
     public HeaderRow     header;
 
-    public CsvFile(string FileName, char DelimChar, List<int> PrimaryKey, List<int> ExcludeFields)
+    public CsvFile(string FileName, char DelimChar, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)
     {
         fileName      = new FileName(FileName);
         delimiter     = new Delimiter(DelimChar);

@@ -16,30 +16,33 @@ public class Csvd
         parserResults
             .WithParsed<Options>(opts =>
                 {
-                    Run(opts.OldFile, opts.NewFile, opts.pKey.ToList(), opts.excludeCols.ToList(), opts.delimiter);
+                    Run(opts);
                 })
             .WithNotParsed(errs => Options.DisplayHelp(parserResults, errs));
     }
 
-    static void Run(string OldFileName, string NewFileName, List<int> PrimaryKey, List<int> ExcludeFields, char delimiter)
+    static void Run(Options opts)
     {
         // Instantiate csvd diff objs and data access
         ICsvd csvd = new CsvdService();
         IDataAccess dataAccess = new ParseCsv();
 
-        var oldFile = new CsvFile(OldFileName, delimiter, PrimaryKey, ExcludeFields);
-        var newFile = new CsvFile(NewFileName, delimiter, PrimaryKey, ExcludeFields);
+        var oldFile = new CsvFile(opts.OldFile, opts.delimiter, opts.pKey, opts.excludeCols);
+        var newFile = new CsvFile(opts.NewFile, opts.delimiter, opts.pKey, opts.excludeCols);
 
         // create Dictionaries of pkey and csvrow values
         var oldFileDict = dataAccess.GetData(oldFile);
         var newFileDict = dataAccess.GetData(newFile);
 
         // Find keys unique to each
-        IEnumerable<string> oldFileDictUnique = csvd.GetUniqueKeys(oldFileDict.csvDict.Keys, newFileDict.csvDict.Keys);
-        IEnumerable<string> newFileDictUnique = csvd.GetUniqueKeys(newFileDict.csvDict.Keys, oldFileDict.csvDict.Keys);
+        IEnumerable<string> oldFileDictUnique = 
+            csvd.GetUniqueKeys(oldFileDict.csvDict.Keys, newFileDict.csvDict.Keys);
+        IEnumerable<string> newFileDictUnique = 
+            csvd.GetUniqueKeys(newFileDict.csvDict.Keys, oldFileDict.csvDict.Keys);
 
         // Find shared keys, with differences
-        IEnumerable<string> sharedKeys = csvd.GetSharedKeys(oldFileDict.csvDict.Keys, newFileDict.csvDict.Keys);
+        IEnumerable<string> sharedKeys = 
+            csvd.GetSharedKeys(oldFileDict.csvDict.Keys, newFileDict.csvDict.Keys);
 
         // Find shared keys, with differing values
         var modifiedRows = csvd.GetModifiedKeys(sharedKeys, oldFileDict, newFileDict);
