@@ -10,11 +10,11 @@ public class CsvdService : ICsvd
         sharedKeys.Where(x => GetModifiedValues(x, oldFileDict, newFileDict));
 
     private static bool GetModifiedValues(string key, CsvDict oldDict, CsvDict newDict) =>
-        !oldDict.csvDict[key].SequenceEqual(newDict.csvDict[key]);
+        !oldDict.csvDict[key].SequenceEqual(newDict.csvDict[key], StringComparer.Ordinal);
 
     public IEnumerable<string> GetUniqueKeys(IEnumerable<string> oldKeys, IEnumerable<string> newKeys) => 
-        oldKeys.Except(newKeys);
+        oldKeys.Except(newKeys, StringComparer.Ordinal);
 
     public IEnumerable<string> GetSharedKeys(IEnumerable<string> oldKeys, IEnumerable<string> newKeys) =>
-        oldKeys.Intersect(newKeys);
+        oldKeys.Intersect(newKeys, StringComparer.Ordinal);
 }

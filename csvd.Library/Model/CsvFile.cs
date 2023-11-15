@@ -37,7 +37,7 @@ public class HeaderRow
 
 public class CsvDict
 {
-    public Dictionary<string, IEnumerable<string>> csvDict = new();
+    public Dictionary<string, IEnumerable<string>> csvDict = new(StringComparer.Ordinal);
 
     public CsvDict() { }
 }
