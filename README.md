@@ -23,4 +23,5 @@ offers a huge array of functionality.
 
 # PLANS
 
-Add binary Powershell cmdlets for use in scripting.
+1. Additional output options - text-only, write to file.
+2. Add binary Powershell cmdlets for use in scripting.
