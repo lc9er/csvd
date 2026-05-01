@@ -1,6 +1,7 @@
 ﻿using csvd.Library.Interfaces;
 using csvd.Library.Model;
-using Sylvan.Data.Csv;
+using FourLambda.Csv;
+// using Sylvan.Data.Csv;
 
 namespace csvd.Library;
 
@@ -12,15 +13,18 @@ public class ParseCsv : IDataAccess
 
         try
         {
-            var csvOpts = new CsvDataReaderOptions { Delimiter = csvFile.delimiter.DelimChar};
-            using CsvDataReader csv = CsvDataReader.Create(csvFile.fileName.Filename, csvOpts);
+            // var csvOpts = new CsvDataReaderOptions { Delimiter = csvFile.delimiter.DelimChar};
+            // using CsvDataReader csv = CsvDataReader.Create(csvFile.fileName.Filename, csvOpts);
+            using var csv = FourLambda.Csv.CsvReader.Create(csvFile.fileName.Filename, hasHeaders: true, separatorChar: csvFile.delimiter.DelimChar);
 
+            [] = csv.Headers.Keys;
             // capture header row, minus excludes
             for (int i = 0; i < csv.FieldCount; i++)
                 if (!csvFile.excludeFields.Exclude.Contains(i))
-                    csvFile.header.Header.Add(csv.GetName(i));
+                    
+                    csvFile.header.Header.Add(csv.Headers.Try);
 
-            while (csv.Read())
+            while (csv.ReadNext())
             {
                 // Get Primary Key, and csv row values
                 string pKey = GetPrimaryKey(csv, csvFile.primaryKey);
@@ -49,7 +53,7 @@ public class ParseCsv : IDataAccess
     // NOTE: This adds 16% to runtime
     // public static string GetPrimaryKey(CsvDataReader line, List<int> primaryKey) =>
     //    string.Concat(primaryKey.Select(line.GetString));
-    public static string GetPrimaryKey(CsvDataReader line, PrimaryKey primaryKey)
+    public static string GetPrimaryKey(FourLambda.Csv.CsvReaderUtf16 line, PrimaryKey primaryKey)
     {
         string pKey = null;
 
@@ -60,7 +64,7 @@ public class ParseCsv : IDataAccess
     }
 
     // LINQ here slows down 15%+
-    public static IEnumerable<string> GetCsvFields(CsvDataReader line, ExcludeFields excludeFields)
+    public static IEnumerable<string> GetCsvFields(FourLambda.Csv.CsvReaderUtf16 line, ExcludeFields excludeFields)
     {
         int rowSize = line.FieldCount - excludeFields.Exclude.Length;
         string[] CsvValues = new string[rowSize];
