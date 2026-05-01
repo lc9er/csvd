@@ -17,7 +17,6 @@
         <PackageReference Include="CommandLineParser" Version="2.9.1" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.7" />
         <PackageReference Include="Spectre.Console" Version="0.55.2" />
-        <PackageReference Include="System.IO.Hashing" Version="10.0.7" />
     </ItemGroup>
 
     <ItemGroup>
