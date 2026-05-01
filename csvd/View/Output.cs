@@ -54,7 +54,7 @@ public class OutputTable
             .Where(x => oldRow[x] != newRow[x])
             .ToList();
 
-    public void PrintDifferenceTable(IEnumerable<string> modifiedKeys, CsvDict oldCsv,
+    public void PrintDifferenceTable(IEnumerable<ulong> modifiedKeys, CsvDict oldCsv,
         CsvDict newCsv, HeaderRow header)
     {
 
@@ -73,7 +73,7 @@ public class OutputTable
         AnsiConsole.Write(table);
     }
 
-    public void PrintSingleTable(IEnumerable<string> keys, CsvDict CsvObj, HeaderRow header)
+    public void PrintSingleTable(IEnumerable<ulong> keys, CsvDict CsvObj, HeaderRow header)
     {
 
         // Build, but hide header columns

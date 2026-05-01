@@ -35,13 +35,13 @@ public class Csvd
         var newFileDict = dataAccess.GetData(newFile);
 
         // Find keys unique to each
-        IEnumerable<string> oldFileDictUnique = 
+        IEnumerable<ulong> oldFileDictUnique = 
             csvd.GetUniqueKeys(oldFileDict.csvDict.Keys, newFileDict.csvDict.Keys);
-        IEnumerable<string> newFileDictUnique = 
+        IEnumerable<ulong> newFileDictUnique = 
             csvd.GetUniqueKeys(newFileDict.csvDict.Keys, oldFileDict.csvDict.Keys);
 
         // Find shared keys, with differences
-        IEnumerable<string> sharedKeys = 
+        IEnumerable<ulong> sharedKeys = 
             csvd.GetSharedKeys(oldFileDict.csvDict.Keys, newFileDict.csvDict.Keys);
 
         // Find shared keys, with differing values

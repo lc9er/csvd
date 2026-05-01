@@ -6,15 +6,15 @@ namespace csvd.Library;
 
 public class CsvdService : ICsvd
 {
-    public IEnumerable<string> GetModifiedKeys(IEnumerable<string> sharedKeys, CsvDict oldFileDict, CsvDict newFileDict) =>
+    public IEnumerable<ulong> GetModifiedKeys(IEnumerable<ulong> sharedKeys, CsvDict oldFileDict, CsvDict newFileDict) =>
         sharedKeys.Where(x => GetModifiedValues(x, oldFileDict, newFileDict));
 
-    private static bool GetModifiedValues(string key, CsvDict oldDict, CsvDict newDict) =>
-        !oldDict.csvDict[key].SequenceEqual(newDict.csvDict[key], StringComparer.Ordinal);
+    private static bool GetModifiedValues(ulong key, CsvDict oldDict, CsvDict newDict) =>
+        !oldDict.csvDict[key].SequenceEqual(newDict.csvDict[key]);
 
-    public IEnumerable<string> GetUniqueKeys(IEnumerable<string> oldKeys, IEnumerable<string> newKeys) => 
-        oldKeys.Except(newKeys, StringComparer.Ordinal);
+    public IEnumerable<ulong> GetUniqueKeys(IEnumerable<ulong> oldKeys, IEnumerable<ulong> newKeys) => 
+        oldKeys.Except(newKeys);
 
-    public IEnumerable<string> GetSharedKeys(IEnumerable<string> oldKeys, IEnumerable<string> newKeys) =>
-        oldKeys.Intersect(newKeys, StringComparer.Ordinal);
+    public IEnumerable<ulong> GetSharedKeys(IEnumerable<ulong> oldKeys, IEnumerable<ulong> newKeys) =>
+        oldKeys.Intersect(newKeys);
 }

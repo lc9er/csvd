@@ -1,6 +1,8 @@
 ﻿using csvd.Library.Interfaces;
 using csvd.Library.Model;
 using Sylvan.Data.Csv;
+using System.IO.Hashing;
+using System.Text;
 
 namespace csvd.Library;
 
@@ -27,7 +29,10 @@ public class ParseCsv : IDataAccess
                 IEnumerable<string> CsvRowValues = GetCsvFields(csv, csvFile.excludeFields);
                 try
                 {
-                    csvDict.csvDict.Add(pKey, CsvRowValues);
+                    // use a hash of the pKey
+                    byte[] source = Encoding.UTF8.GetBytes(pKey);
+                    ulong pKeyHashValue = XxHash64.HashToUInt64(source);
+                    csvDict.csvDict.Add(pKeyHashValue, CsvRowValues);
                 }
                 catch (ArgumentException)
                 {
