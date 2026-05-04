@@ -39,7 +39,7 @@ namespace csvd.UI.Options
                 yield return new Example("Compare two versions of a csv file. Defaults to column 0 as primary key",
                     new Options { OldFile = "OldFile.csv", NewFile = "NewFile.csv" });
                 yield return new Example("Compare files with compound primary key and exclude columns",
-                    new Options { OldFile = "OldFile.csv", NewFile = "NewFile.csv", pKey = new List<int>() { 0, 1 }, excludeCols = new List<int>() { 2, 7 } });
+                    new Options { OldFile = "OldFile.csv", NewFile = "NewFile.csv", pKey = [0, 1], excludeCols = [2, 7] });
                 yield return new Example("Compare files with custom delimiter",
                     new Options { OldFile = "OldFile.csv", NewFile = "NewFile.csv", delimiter = ':' });
             }

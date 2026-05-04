@@ -74,6 +74,6 @@ public class ParseCsv : IDataAccess
                 index++;
             }
 
-        return CsvValues.ToList();
+        return [.. CsvValues];
     }
 }

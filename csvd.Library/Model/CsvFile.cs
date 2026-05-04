@@ -42,22 +42,12 @@ public class CsvDict
     public CsvDict() { }
 }
 
-public class CsvFile
+public class CsvFile(string FileName, char DelimChar, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)
 {
-    public FileName      fileName;
-    public Delimiter     delimiter;
-    public PrimaryKey    primaryKey;
-    public ExcludeFields excludeFields;
-    public CsvDict       csvFileDict;
-    public HeaderRow     header;
-
-    public CsvFile(string FileName, char DelimChar, IEnumerable<int> PrimaryKey, IEnumerable<int> ExcludeFields)
-    {
-        fileName      = new FileName(FileName);
-        delimiter     = new Delimiter(DelimChar);
-        primaryKey    = new PrimaryKey(PrimaryKey);
-        excludeFields = new ExcludeFields(ExcludeFields);
-        csvFileDict   = new CsvDict();
-        header        = new HeaderRow();
-    }
+    public FileName fileName           = new(FileName);
+    public Delimiter delimiter         = new(DelimChar);
+    public PrimaryKey primaryKey       = new(PrimaryKey);
+    public ExcludeFields excludeFields = new(ExcludeFields);
+    public CsvDict csvFileDict         = new();
+    public HeaderRow header            = new();
 }
