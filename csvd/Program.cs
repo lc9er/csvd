@@ -24,7 +24,6 @@ public class Csvd
     static void Run(Options opts)
     {
         // Instantiate csvd diff objs and data access
-        ICsvd csvd = new CsvdService();
         IDataAccess dataAccess = new ParseCsv();
 
         var oldFile = new CsvFile(opts.OldFile, opts.delimiter, opts.pKey, opts.excludeCols);
@@ -34,18 +33,7 @@ public class Csvd
         var oldFileDict = dataAccess.GetData(oldFile);
         var newFileDict = dataAccess.GetData(newFile);
 
-        // Find keys unique to each
-        IEnumerable<string> oldFileDictUnique = 
-            csvd.GetUniqueKeys(oldFileDict.csvDict.Keys, newFileDict.csvDict.Keys);
-        IEnumerable<string> newFileDictUnique = 
-            csvd.GetUniqueKeys(newFileDict.csvDict.Keys, oldFileDict.csvDict.Keys);
-
-        // Find shared keys, with differences
-        IEnumerable<string> sharedKeys = 
-            csvd.GetSharedKeys(oldFileDict.csvDict.Keys, newFileDict.csvDict.Keys);
-
-        // Find shared keys, with differing values
-        var modifiedRows = csvd.GetModifiedKeys(sharedKeys, oldFileDict, newFileDict);
+        var (oldFileDictUnique, modifiedRows, newFileDictUnique) = oldFileDict.CompareTo(newFileDict);
 
         // OutputTable
         var additions = new OutputTable($"[blue]Additions[/]", TableType.ADDITION);
