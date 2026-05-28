@@ -5,18 +5,18 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>csvd</ToolCommandName>
         <PackageOutputPath>./nupkg</PackageOutputPath>
-        <Version>2.0.7</Version>
-        <FileVersion>2.0.7</FileVersion>
+        <Version>2.0.8</Version>
+        <FileVersion>2.0.8</FileVersion>
+        <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+        <PublishAot>true</PublishAot>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommandLineParser" Version="2.9.1" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.7" />
         <PackageReference Include="Spectre.Console" Version="0.55.2" />
+        <PackageReference Include="System.CommandLine" Version="2.0.8" />
     </ItemGroup>
 
     <ItemGroup>

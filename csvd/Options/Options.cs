@@ -1,59 +1,94 @@
-using CommandLine;
-using CommandLine.Text;
+using System.CommandLine;
+using csvd.Library;
+using csvd.Library.Interfaces;
+using csvd.Library.Model;
+using csvd.UI.Options;
+using csvd.UI.View;
 
-namespace csvd.UI.Options
+namespace csvd.UI.Options;
+
+using System.CommandLine;
+
+
+public class Options
 {
-    public class Options
+    public static RootCommand BuildRootCommand()
     {
-        [Option('p', "primary-key",
-            Separator = ' ',
-            Default = new[] { 0 },
-            HelpText = "Single-space, 0-indexed, list of column numbers used to compare csv files.")]
-        public IEnumerable<int>? pKey { get; set; }
-
-        [Option('e', "exclude-columns",
-            Separator = ' ',
-            HelpText = "Single-space, 0-indexed, list of column numbers to exclude from comparison.")]
-        public IEnumerable<int>? excludeCols { get; set; }
-
-        [Option('d', "delimiter",
-            Default = ',',
-            HelpText = "Delimiter character. Defaults to comma.")]
-        public char delimiter { get; set; }
-
-        [Value(0, MetaName = "Old csv file",
-                HelpText = "Old file version",
-                Required = true)]
-        public string? OldFile { get; set; }
-
-        [Value(1, MetaName = "New csv file",
-                HelpText = "New file version",
-                Required = true)]
-        public string? NewFile { get; set; }
-
-        [Usage(ApplicationAlias = "csvd")]
-        public static IEnumerable<Example> Examples
+        Argument<FileInfo> oldFile = new("oldfile")
         {
-            get
-            {
-                yield return new Example("Compare two versions of a csv file. Defaults to column 0 as primary key",
-                    new Options { OldFile = "OldFile.csv", NewFile = "NewFile.csv" });
-                yield return new Example("Compare files with compound primary key and exclude columns",
-                    new Options { OldFile = "OldFile.csv", NewFile = "NewFile.csv", pKey = [0, 1], excludeCols = [2, 7] });
-                yield return new Example("Compare files with custom delimiter",
-                    new Options { OldFile = "OldFile.csv", NewFile = "NewFile.csv", delimiter = ':' });
-            }
-        }
-        public static void DisplayHelp<T>(ParserResult<T> result, IEnumerable<Error> errs)
+            Description = "Old file",
+        };
+
+        Argument<FileInfo> newFile = new("newfile")
         {
-            var helpText = HelpText.AutoBuild(result, h =>
-            {
-                h.AdditionalNewLineAfterOption = false;
-                h.Heading = "csvd 2.0.7";
-                h.Copyright = "Copyright (c) 2023 lc9er";
-                return HelpText.DefaultParsingErrorsHandler(result, h);
-            }, e => e);
-            Console.WriteLine(helpText);
-        }
+            Description = "New file",
+        };
+
+        Option<int[]> pKey = new("--primary-key", "-p")
+        {
+            Arity = ArgumentArity.OneOrMore,
+            AllowMultipleArgumentsPerToken = true,
+            Description = "Single-space, 0-indexed, list of column numbers used to compare csv files.",
+            DefaultValueFactory = parseResult => [0],
+        };
+
+        Option<int[]> excludeCols = new("-e")
+        {
+            Arity = ArgumentArity.ZeroOrMore,
+            AllowMultipleArgumentsPerToken = true,
+            Description = "Single-space, 0-indexed, list of column numbers to exclude from comparison.",
+        };
+
+        Option<string> delimiter = new("--delimiter", "-d")
+        {
+            Description = "Delimiting character (wrapped in quotes)",
+            DefaultValueFactory = parseResult => ",",
+        };
+
+        RootCommand rootCommand = new("cat a csv file");
+        rootCommand.Arguments.Add(oldFile);
+        rootCommand.Arguments.Add(newFile);
+        rootCommand.Options.Add(pKey);
+        rootCommand.Options.Add(excludeCols);
+        rootCommand.Options.Add(delimiter);
+
+        rootCommand.SetAction(parseResult =>
+        {
+            var  oldfile   = parseResult.GetValue(oldFile);
+            var  newfile   = parseResult.GetValue(newFile);
+            var  pkey      = parseResult.GetValue(pKey);
+            var  exCols    = parseResult.GetValue(excludeCols);
+            var  delimOpt  = parseResult.GetValue(delimiter);
+            char delimChar = delimOpt[0];
+
+            Run(oldfile.Name, newfile.Name, pkey, exCols, delimChar);
+        });
+    
+        return rootCommand;
+    }
+    
+    private static void Run(string oFile, string nFile, int[] pk, int[] exc, char delimChar)
+    {
+        // Instantiate csvd diff objs and data access
+        IDataAccess dataAccess = new ParseCsv();
+
+        var oldFile = new CsvFile(oFile, delimChar, pk, exc);
+        var newFile = new CsvFile(nFile, delimChar, pk, exc);
+
+        // create Dictionaries of pkey and csvrow values
+        var oldFileDict = dataAccess.GetData(oldFile);
+        var newFileDict = dataAccess.GetData(newFile);
+
+        var (oldFileDictUnique, modifiedRows, newFileDictUnique) = oldFileDict.CompareTo(newFileDict);
+
+        // OutputTable
+        var additions = new OutputTable($"[blue]Additions[/]", TableType.ADDITION);
+        additions.PrintSingleTable(newFileDictUnique, newFileDict, newFile.header);
+
+        var modifications = new OutputTable($"[red]Modifications[/]", TableType.DIFFERENCE);
+        modifications.PrintDifferenceTable(modifiedRows, oldFileDict, newFileDict, newFile.header);
+
+        var removals = new OutputTable($"[orange1]Removals[/]", TableType.REMOVAL);
+        removals.PrintSingleTable(oldFileDictUnique, oldFileDict, oldFile.header);
     }
 }
