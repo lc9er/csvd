@@ -24,16 +24,14 @@ public class Csvd
     static void Run(Options opts)
     {
         // Instantiate csvd diff objs and data access
-        IDataAccess dataAccess = new ParseCsv();
+        ParseCsv dataAccess = new ();
 
         var oldFile = new CsvFile(opts.OldFile, opts.delimiter, opts.pKey, opts.excludeCols);
         var newFile = new CsvFile(opts.NewFile, opts.delimiter, opts.pKey, opts.excludeCols);
 
         // create Dictionaries of pkey and csvrow values
-        var oldFileDict = dataAccess.GetData(oldFile);
-        var newFileDict = dataAccess.GetData(newFile);
-
-        var (oldFileDictUnique, modifiedRows, newFileDictUnique) = oldFileDict.CompareTo(newFileDict);
+        var oldFileDict                     = dataAccess.GetSourceData(oldFile);
+        var (newFileDict, modifiedRowsDict) = dataAccess.GetComparisonData(newFile, oldFileDict);
 
         // OutputTable
         var additions = new OutputTable($"[blue]Additions[/]", TableType.ADDITION);

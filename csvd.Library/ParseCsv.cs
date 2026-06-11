@@ -4,9 +4,9 @@ using Sylvan.Data.Csv;
 
 namespace csvd.Library;
 
-public class ParseCsv : IDataAccess
+public class ParseCsv
 {
-    public CsvDict GetData(CsvFile csvFile)
+    public CsvDict GetSourceData(CsvFile csvFile)
     {
         var csvDict = new CsvDict();
 
@@ -28,6 +28,53 @@ public class ParseCsv : IDataAccess
                 try
                 {
                     csvDict.csvDict.Add(pKey, CsvRowValues);
+                }
+                catch (ArgumentException)
+                {
+                    Console.WriteLine($"Duplicate primary key {pKey} found in {csvFile.fileName.Filename}.");
+                    Environment.Exit(1);
+                }
+            }
+        }
+
+        catch (FileNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+            Environment.Exit(1);
+        }
+
+        return csvDict;
+    }
+
+    public CsvDict GetComparisonData(CsvFile csvFile, CsvDict oldFileDict)
+    {
+        var csvDict = new CsvDict();
+
+        try
+        {
+            var csvOpts = new CsvDataReaderOptions { Delimiter = csvFile.delimiter.DelimChar};
+            using CsvDataReader csv = CsvDataReader.Create(csvFile.fileName.Filename, csvOpts);
+
+            // capture header row, minus excludes
+            for (int i = 0; i < csv.FieldCount; i++)
+                if (!csvFile.excludeFields.Exclude.Contains(i))
+                    csvFile.header.Header.Add(csv.GetName(i));
+
+            while (csv.Read())
+            {
+                // Get Primary Key, and csv row values
+                string pKey = GetPrimaryKey(csv, csvFile.primaryKey);
+                IEnumerable<string> CsvRowValues = GetCsvFields(csv, csvFile.excludeFields);
+                try
+                {
+                    if (!oldFileDict.csvDict.ContainsKey(pKey))
+                    {
+                        csvDict.csvDict.Add(pKey, CsvRowValues);
+                    } 
+                    else
+                    {
+                        if 
+                    }
                 }
                 catch (ArgumentException)
                 {
