@@ -1,5 +1,6 @@
 using csvd.Library.Model;
 using Spectre.Console;
+using System.ComponentModel;
 using System.Security.Cryptography;
 
 namespace csvd.UI.View;
@@ -54,16 +55,17 @@ public class OutputTable
             .Where(x => oldRow[x] != newRow[x])
             .ToList();
 
-    public void PrintDifferenceTable(IEnumerable<string> modifiedKeys, CsvDict oldCsv,
+    // TODO: Fix Modified so it captures new and old data.
+    public void PrintDifferenceTable(CsvDict oldCsv, List<ModifiedCsvDict> modifiedList,
         CsvDict newCsv, HeaderRow header)
     {
 
         table.AddColumns(header.Header.ToArray());
 
-        foreach (var key in modifiedKeys)
+        foreach (var key in modifiedList)
         {
-            var oldRow = oldCsv.csvDict[key].ToList();
-            var newRow = newCsv.csvDict[key].ToList();
+            var oldRow = key.OldRow.ToList();
+            var newRow = key.NewRow.ToList();
 
             var diffs = FindRowDiffereces(oldRow, newRow);
             table.AddRow(FormatTableRow("[orange1]", oldRow, diffs));
@@ -73,7 +75,7 @@ public class OutputTable
         AnsiConsole.Write(table);
     }
 
-    public void PrintSingleTable(IEnumerable<string> keys, CsvDict CsvObj, HeaderRow header)
+    public void PrintSingleTable(CsvDict CsvObj, HeaderRow header)
     {
 
         // Build, but hide header columns
@@ -86,7 +88,7 @@ public class OutputTable
             _                   => "[white]",
         };
 
-        foreach (var key in keys)
+        foreach (var key in CsvObj.csvDict.Keys)
             table.AddRow(FormatTableRow(cellColor, CsvObj.csvDict[key].ToList()));
 
         AnsiConsole.Write(table);
