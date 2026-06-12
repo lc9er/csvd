@@ -37,7 +37,6 @@ public class Csvd
         additions.PrintSingleTable(newFileDict, newFile.header);
 
         var modifications = new OutputTable($"[red]Modifications[/]", TableType.DIFFERENCE);
-        // modifications.PrintSingleTable(modFileDict, newFile.header);
         modifications.PrintDifferenceTable(oldFileDict, modFileDict, newFileDict, newFile.header);
 
         var removals = new OutputTable($"[orange1]Removals[/]", TableType.REMOVAL);
