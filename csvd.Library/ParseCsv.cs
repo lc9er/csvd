@@ -5,7 +5,7 @@ namespace csvd.Library;
 
 public class ParseCsv
 {
-    public CsvDict GetOriginalData(CsvFile csvFile)
+    public CsvDict GetData(CsvFile csvFile)
     {
         var csvDict = new CsvDict();
 
@@ -45,7 +45,7 @@ public class ParseCsv
         return csvDict;
     }
 
-    public (CsvDict, List<ModifiedCsvDict>) GetNewData(CsvFile csvFile, CsvDict oldFileDict)
+    public (CsvDict, List<ModifiedCsvDict>) GetData(CsvFile csvFile, CsvDict oldFileDict)
     {
         var newFileDict = new CsvDict();
         var modFileDict = new List<ModifiedCsvDict>();
