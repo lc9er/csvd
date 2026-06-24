@@ -7,6 +7,7 @@ public class PrimaryKey
 {
     public int[] PKey;
 
+    public PrimaryKey() { }
     public PrimaryKey(IEnumerable<int> pKey)
     {
         PKey = [.. pKey];
@@ -17,6 +18,7 @@ public class ExcludeFields
 {
     public int[] Exclude;
 
+    public ExcludeFields() { }
     public ExcludeFields(IEnumerable<int> exclude)
     {
         Exclude = exclude.ToArray();

@@ -15,7 +15,9 @@
 - [x] Move 'find unique keys' to class lib
 - [x] Move 'find shared keys, with diff vals' to class lib
 - [x] Create interface for data access (to support additional filetypes)
+- [ ] Use Spectre for writing exceptions.
+    - [ ] Logging
+- [ ] Update Spectre to live table display.
 - [ ] Unit tests.
 - [ ] Create Powershell module.
-- [x] output ONLY additions, removals, or modifications.
-- [ ] check excludes against column count (when creating header).
+- [ ] output ONLY additions, removals, or modifications.
