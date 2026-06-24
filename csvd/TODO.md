@@ -18,8 +18,11 @@
 - [ ] Use Spectre for writing exceptions.
     - [ ] Logging
 - [ ] Update Spectre to live table display.
-- [ ] Unit tests.
+- [ ] Unit tests - DO THIS.
 - [ ] Create Powershell module.
 - [ ] output ONLY additions, removals, or modifications.
 - [ ] option for CSV output
 - [ ] nest tables for better output formatting
+- [ ] remove commit string from verion output
+- [ ] check for mismatched headers 
+- [ ] check for mismatched columns
