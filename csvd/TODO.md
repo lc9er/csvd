@@ -21,3 +21,5 @@
 - [ ] Unit tests.
 - [ ] Create Powershell module.
 - [ ] output ONLY additions, removals, or modifications.
+- [ ] option for CSV output
+- [ ] nest tables for better output formatting
