@@ -9,12 +9,13 @@
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>csvd</ToolCommandName>
         <PackageOutputPath>./nupkg</PackageOutputPath>
-        <Version>2.0.8</Version>
-        <FileVersion>2.0.8</FileVersion>
+        <Version>2.0.7</Version>
+        <FileVersion>2.0.7</FileVersion>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="CommandLineParser" Version="2.9.1" />
+        <PackageReference Include="Spectre.Console" Version="0.57.0" />
     </ItemGroup>
 
     <ItemGroup>

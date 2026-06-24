@@ -29,12 +29,17 @@ public class Csvd
         var newFile = new CsvFile(opts.NewFile, opts.delimiter, opts.pKey, opts.excludeCols);
 
         // create Dictionaries of pkey and csvrow values
-        var oldFileDict                = dataAccess.GetData(oldFile);
-        var (newFileDict, modFileDict) = dataAccess.GetData(newFile, oldFileDict);
+        var oldFileDict                = dataAccess.GetOriginalData(oldFile);
+        var (newFileDict, modFileDict) = dataAccess.GetNewData(newFile, oldFileDict);
 
-        // Output
-        Output.PrintResults(oldFileDict, oldFile.header);
-        Output.PrintResults(modFileDict);
-        Output.PrintResults(newFileDict);
+        // OutputTable
+        var additions = new OutputTable($"[blue]Additions[/]", TableType.ADDITION);
+        additions.PrintSingleTable(newFileDict, newFile.header);
+
+        var modifications = new OutputTable($"[red]Modifications[/]", TableType.DIFFERENCE);
+        modifications.PrintDifferenceTable(oldFileDict, modFileDict, newFileDict, newFile.header);
+
+        var removals = new OutputTable($"[orange1]Removals[/]", TableType.REMOVAL);
+        removals.PrintSingleTable(oldFileDict, oldFile.header);
     }
 }
